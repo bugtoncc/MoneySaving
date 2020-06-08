@@ -13,12 +13,9 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.runtime\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Runtime.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.runtime\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Runtime.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Build.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Build.props')" />
+    <Import Project="$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.props" Condition="Exists('$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime)' == '' ">C:\Users\bugton\.nuget\packages\microsoft.aspnetcore.components.webassembly.runtime\3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime>
-    <PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer)' == '' ">C:\Users\bugton\.nuget\packages\microsoft.aspnetcore.components.webassembly.devserver\3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer>
-    <PkgMicrosoft_AspNetCore_Components_WebAssembly_Build Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Build)' == '' ">C:\Users\bugton\.nuget\packages\microsoft.aspnetcore.components.webassembly.build\3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_Build>
+    <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\bugton\.nuget\packages\entityframework\6.4.4</PkgEntityFramework>
   </PropertyGroup>
 </Project>
