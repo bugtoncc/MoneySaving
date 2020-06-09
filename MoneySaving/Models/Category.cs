@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace MoneySaving.Models
 {
-    public class Pocket
+
+    public enum Type
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int PocketID { get; set; }
+        Income, Outcome
+    }
+
+    public class Category
+    {        
+        public int CategoryID { get; set; }
+        public int PocketId { get; set; }
         public string Name { get; set; }
+        public Type Type { get; set; }
         public DateTime LastUpdate { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
+        public virtual Pocket Pocket { get; set; }
     }
 }
