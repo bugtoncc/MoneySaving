@@ -1,25 +1,21 @@
-﻿using MoneySaving.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using MoneySaving.Models;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MoneySaving.DAL
 {
     public class MoneyContext : DbContext
     {
-        public MoneyContext() : base("MoneyContext")
+        public MoneyContext(DbContextOptions<MoneyContext> options) : base(options)
         {
         }
 
         public DbSet<Pocket> Pocket { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingEntitySetNameConvention>();
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Conventions.Remove<PluralizingEntitySetNameConvention>();
+        //}
     }
 }

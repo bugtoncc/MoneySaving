@@ -11,6 +11,11 @@ namespace MoneySaving.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PocketID { get; set; }
         public string Name { get; set; }
+
+        public string TestColumnString { get; set; }
+        public int TestColumnNumber { get; set; }
+
+
         public DateTime LastUpdate { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
