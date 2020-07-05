@@ -14,6 +14,7 @@ namespace MoneySaving.Models
         public DateTime LastUpdate { get; set; }
         public string UpdateBy { get; set; }
 
-        //public virtual CategoryMap CategoryMapID { get; set; }
+        public int CategoryMapId { get; set; }
+        public CategoryMap CategoryMap { get; set; }
     }
 }

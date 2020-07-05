@@ -12,8 +12,11 @@ namespace MoneySaving.Models
         public DateTime LastUpdate { get; set; }
         public string UpdateBy { get; set; }
 
-        //public virtual MCategory MCategoryID { get; set; }
-        //public virtual MPocket MPocketID { get; set; }
-        //public virtual ICollection<MainTransaction> MainTransactionsID { get; set; }
+
+        public int MCategoryId { get; set; }
+        public MCategory MCategory { get; set; }
+        public int MPocketId { get; set; }
+        public MPocket MPocket { get; set; }
+        public ICollection<MainTransaction> MainTransactions { get; set; }
     }
 }

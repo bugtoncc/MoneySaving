@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneySaving.DAL;
 
 namespace MoneySaving.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20200705051435_AddPKCashflowType")]
+    partial class AddPKCashflowType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,12 +55,6 @@ namespace MoneySaving.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MPocketId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("StatusFlag")
                         .HasColumnType("bit");
 
@@ -66,10 +62,6 @@ namespace MoneySaving.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("MCategoryId");
-
-                    b.HasIndex("MPocketId");
 
                     b.ToTable("CategoryMap");
                 });
@@ -134,9 +126,6 @@ namespace MoneySaving.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryMapId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Detail")
                         .HasColumnType("nvarchar(max)");
 
@@ -154,24 +143,7 @@ namespace MoneySaving.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CategoryMapId");
-
                     b.ToTable("MainTransaction");
-                });
-
-            modelBuilder.Entity("MoneySaving.Models.CategoryMap", b =>
-                {
-                    b.HasOne("MoneySaving.Models.MCategory", "MCategory")
-                        .WithMany("CategoryMaps")
-                        .HasForeignKey("MCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoneySaving.Models.MPocket", "MPocket")
-                        .WithMany("CategoryMaps")
-                        .HasForeignKey("MPocketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MoneySaving.Models.MCategory", b =>
@@ -179,15 +151,6 @@ namespace MoneySaving.Migrations
                     b.HasOne("MoneySaving.Models.CashflowType", "CashflowType")
                         .WithMany("MCategories")
                         .HasForeignKey("CashflowTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MoneySaving.Models.MainTransaction", b =>
-                {
-                    b.HasOne("MoneySaving.Models.CategoryMap", "CategoryMap")
-                        .WithMany("MainTransactions")
-                        .HasForeignKey("CategoryMapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

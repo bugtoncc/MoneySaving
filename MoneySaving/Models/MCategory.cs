@@ -15,8 +15,8 @@ namespace MoneySaving.Models
         public DateTime LastUpdate { get; set; }
         public string UpdateBy { get; set; }
 
-        //public virtual CashflowType CashflowTypeID { get; set; }
-        //public virtual ICollection<CategoryMap> CategoryMapID { get; set; }
-
+        public int CashflowTypeId { get; set; }
+        public CashflowType CashflowType { get; set; }
+        public List<CategoryMap> CategoryMaps { get; set; }
     }
 }

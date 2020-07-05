@@ -13,6 +13,6 @@ namespace MoneySaving.Models
         public DateTime LastUpdate { get; set; }
         public string UpdateBy { get; set; }
 
-        //public virtual ICollection<MCategory> MCategoryID { get; set; }
+        public List<MCategory> MCategories { get; set; }
     }
 }

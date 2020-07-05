@@ -67,3 +67,4 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\runtimes\wi
 D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.csproj.CoreCompileInputs.cache
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.MvcApplicationPartsAssemblyInfo.cache
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.csprojAssemblyReference.cache
