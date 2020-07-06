@@ -177,3 +177,8 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Index.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CategoryMaps\Create.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CategoryMaps\Delete.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CategoryMaps\Details.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CategoryMaps\Edit.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CategoryMaps\Index.cshtml.g.cs
