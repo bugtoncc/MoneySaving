@@ -167,3 +167,13 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CashflowTypes\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CashflowTypes\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CashflowTypes\Index.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MPockets\Create.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MPockets\Delete.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MPockets\Details.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MPockets\Edit.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MPockets\Index.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Create.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Delete.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Details.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Edit.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MCategories\Index.cshtml.g.cs
