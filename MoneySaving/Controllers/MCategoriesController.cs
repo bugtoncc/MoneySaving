@@ -20,10 +20,35 @@ namespace MoneySaving.Controllers
         }
 
         // GET: MCategories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string categoryCashflowType, string searchString)
         {
-            var moneyContext = _context.MCategory.Include(m => m.CashflowType);
-            return View(await moneyContext.ToListAsync());
+            //var moneyContext = _context.MCategory.Include(m => m.CashflowType);
+            //return View(await moneyContext.ToListAsync());
+
+            // Use LINQ to get list of CashflowType.
+            IQueryable<string> cashflowTypeQuery = from m in _context.CashflowType
+                                                   select m.Name;
+
+            var categories = from c in _context.MCategory.Include(c => c.CashflowType)
+                             select c;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                categories = categories.Where(c => c.Name.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(categoryCashflowType))
+            {
+                categories = categories.Where(c => c.CashflowType.Name == categoryCashflowType);
+            }
+
+            var categoryCashflowTypeVM = new CategoryViewModel
+            {
+                CashflowTypeName = new SelectList(await cashflowTypeQuery.Distinct().ToListAsync()),
+                Categories = await categories.ToListAsync()
+            };
+
+            return View(categoryCashflowTypeVM);
         }
 
         // GET: MCategories/Details/5
