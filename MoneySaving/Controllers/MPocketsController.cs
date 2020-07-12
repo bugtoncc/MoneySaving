@@ -56,7 +56,7 @@ namespace MoneySaving.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,StatusFlag,LastUpdate,UpdateBy")] MPocket mPocket)
+        public async Task<IActionResult> Create([Bind("ID,Name,Balance,StatusFlag,LastUpdate,UpdateBy")] MPocket mPocket)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace MoneySaving.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,StatusFlag,LastUpdate,UpdateBy")] MPocket mPocket)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Balance,StatusFlag,LastUpdate,UpdateBy")] MPocket mPocket)
         {
             if (id != mPocket.ID)
             {

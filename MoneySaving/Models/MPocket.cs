@@ -11,6 +11,11 @@ namespace MoneySaving.Models
         [Required(ErrorMessage = "*")]
         public string Name { get; set; }
 
+        [Display(Name = "Balance")]
+        [Required(ErrorMessage = "*")]
+        [DataType(DataType.Currency)]
+        public double Balance { get; set; }
+
         [Display(Name = "Active")]
         public bool StatusFlag { get; set; }
 
@@ -22,7 +27,8 @@ namespace MoneySaving.Models
 
 
         //--- reference key ---//
-        public List<CategoryMap> CategoryMaps { get; set; }
+        //public List<CategoryMap> CategoryMaps { get; set; }
+        public List<MainTransaction> MainTransactions { get; set; }
 
         public MPocket()
         {

@@ -54,7 +54,8 @@ namespace MoneySaving
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=MainTransactions}/{action=Index}/{id?}");
+                //pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

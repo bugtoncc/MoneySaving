@@ -28,7 +28,9 @@ namespace MoneySaving.Models
 
         [Display(Name = "Cashflow Type")]
         public CashflowType CashflowType { get; set; }
-        public List<CategoryMap> CategoryMaps { get; set; }
+        //public List<CategoryMap> CategoryMaps { get; set; }
+        public List<MainTransaction> MainTransactions { get; set; }
+
 
         public MCategory()
         {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneySaving.DAL;
 
 namespace MoneySaving.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20200712102551_RevertAddMCategoryName")]
+    partial class RevertAddMCategoryName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +44,37 @@ namespace MoneySaving.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CashflowType");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.CategoryMap", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MPocketId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("StatusFlag")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MCategoryId");
+
+                    b.HasIndex("MPocketId");
+
+                    b.ToTable("CategoryMap");
                 });
 
             modelBuilder.Entity("MoneySaving.Models.MCategory", b =>
@@ -81,9 +114,6 @@ namespace MoneySaving.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Balance")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
@@ -109,8 +139,8 @@ namespace MoneySaving.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<int>("CategoryMapId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Detail")
                         .IsRequired()
@@ -118,12 +148,6 @@ namespace MoneySaving.Migrations
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("MCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MpocketId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("StatusFlag")
                         .HasColumnType("bit");
@@ -136,11 +160,24 @@ namespace MoneySaving.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("MCategoryId");
-
-                    b.HasIndex("MpocketId");
+                    b.HasIndex("CategoryMapId");
 
                     b.ToTable("MainTransaction");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.CategoryMap", b =>
+                {
+                    b.HasOne("MoneySaving.Models.MCategory", "MCategory")
+                        .WithMany("CategoryMaps")
+                        .HasForeignKey("MCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneySaving.Models.MPocket", "MPocket")
+                        .WithMany("CategoryMaps")
+                        .HasForeignKey("MPocketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MoneySaving.Models.MCategory", b =>
@@ -154,15 +191,9 @@ namespace MoneySaving.Migrations
 
             modelBuilder.Entity("MoneySaving.Models.MainTransaction", b =>
                 {
-                    b.HasOne("MoneySaving.Models.MCategory", "MCategory")
+                    b.HasOne("MoneySaving.Models.CategoryMap", "CategoryMap")
                         .WithMany("MainTransactions")
-                        .HasForeignKey("MCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoneySaving.Models.MPocket", "MPocket")
-                        .WithMany("MainTransactions")
-                        .HasForeignKey("MpocketId")
+                        .HasForeignKey("CategoryMapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,0 +1,113 @@
+﻿@*@model IEnumerable<MoneySaving.Models.MainTransaction>*@
+@model MoneySaving.Models.MainViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Pocket</h2>
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pockets[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pockets[0].Balance)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Pockets)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Transaction</h2>
+<form class="form-inline small" asp-controller="MainTransactions" asp-action="Index" method="get">
+    <div class="form-group mb-2">
+        <select class="form-control" asp-for="QueryPocket" asp-items="Model.PocketsSelectList">
+            <option value="">All</option>
+        </select>
+    </div>
+    <input type="submit" class="btn btn-outline-primary mb-2" value="Filter" />
+</form>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].TransactionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].MPocket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].MCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].Detail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].Amount)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.StatusFlag)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastUpdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdateBy)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MainTransactions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MPocket.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MCategory.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.StatusFlag)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastUpdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>*@
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
