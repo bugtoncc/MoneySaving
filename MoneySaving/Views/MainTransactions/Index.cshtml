@@ -4,45 +4,29 @@
 @{
     ViewData["Title"] = "Index";
 }
+<h4>Balance</h4>
 
-<h2>Pocket</h2>
-<table class="table table-sm table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Pockets[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pockets[0].Balance)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Pockets)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Balance)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var item in Model.Pockets)
+{
+    <span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) -- @Html.DisplayFor(modelItem => item.Balance)</span>
+}
 
-<h2>Transaction</h2>
-<form class="form-inline small" asp-controller="MainTransactions" asp-action="Index" method="get">
-    <div class="form-group mb-2">
-        <select class="form-control" asp-for="QueryPocket" asp-items="Model.PocketsSelectList">
-            <option value="">All</option>
-        </select>
-    </div>
-    <input type="submit" class="btn btn-outline-primary mb-2" value="Filter" />
+<hr />
+
+<h4>Transaction</h4>
+
+<form asp-controller="MainTransactions" asp-action="Index" method="get">
+    <select asp-for="QueryPocket" asp-items="Model.PocketsSelectList">
+        <option value="">All</option>
+    </select>
+    <input type="submit" value="Filter" />
 </form>
+<br />
 <p>
-    <a asp-action="Create">Create New</a>
+    @*<a asp-action="Create">เพิ่มรายรับ</a>
+        <a asp-action="Create" class="ml-2">เพิ่มรายจ่าย</a>*@
+    <a href="/MainTransactions/Create?id=7">เพิ่มรายรับ</a>
+    <a href="/MainTransactions/Create?id=8" class="ml-2">เพิ่มรายจ่าย</a>
 </p>
 <table class="table">
     <thead>
