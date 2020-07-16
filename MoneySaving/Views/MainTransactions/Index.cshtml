@@ -8,7 +8,7 @@
 
 @foreach (var item in Model.Pockets)
 {
-    <span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) -- @Html.DisplayFor(modelItem => item.Balance)</span>
+    <span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) . @Html.DisplayFor(modelItem => item.Balance)</span>
 }
 
 <hr />
