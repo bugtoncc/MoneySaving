@@ -27,7 +27,8 @@ namespace MoneySaving
         {
             services.AddControllersWithViews();
             services.AddDbContext<MoneyContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MoneyContext2")));
+                //options.UseSqlServer(Configuration.GetConnectionString("MoneyContextIIS")));
+                options.UseSqlServer(Configuration.GetConnectionString("MoneyContextAws")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

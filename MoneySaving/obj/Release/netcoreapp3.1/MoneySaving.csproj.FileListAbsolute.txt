@@ -182,3 +182,4 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Release\netcoreapp3.1\staticweb
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Release\netcoreapp3.1\MoneySaving.dll
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Release\netcoreapp3.1\MoneySaving.pdb
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Release\netcoreapp3.1\MoneySaving.genruntimeconfig.cache
+D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Release\netcoreapp3.1\aws-beanstalk-tools-defaults.json

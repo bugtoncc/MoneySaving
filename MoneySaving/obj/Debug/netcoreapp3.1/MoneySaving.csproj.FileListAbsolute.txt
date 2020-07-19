@@ -159,8 +159,6 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\ru\Microsof
 D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.csproj.CoreCompileInputs.cache
-D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.MvcApplicationPartsAssemblyInfo.cache
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CashflowTypes\Create.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CashflowTypes\Delete.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\CashflowTypes\Details.cshtml.g.cs
@@ -182,3 +180,6 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MainTransactions\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MainTransactions\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MainTransactions\Index.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\bin\Debug\netcoreapp3.1\aws-beanstalk-tools-defaults.json
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.csproj.CoreCompileInputs.cache
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\MoneySaving.MvcApplicationPartsAssemblyInfo.cache
