@@ -1,12 +1,10 @@
 ﻿@model MoneySaving.Models.MainTransaction
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "เพิ่มรายการ";
 }
 
-<h1>Create</h1>
-
-<h4>Transaction</h4>
+<h2>@ViewData["Title_1"]</h2>
 <hr />
 
 <div class="row">
@@ -14,13 +12,13 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="MpocketId" class="control-label"></label>
+                <select asp-for="MpocketId" class="form-control" asp-items="ViewBag.MpocketId"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="TransactionDate" class="control-label"></label>
                 <input asp-for="TransactionDate" class="form-control" />
                 <span asp-validation-for="TransactionDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MpocketId" class="control-label"></label>
-                <select asp-for="MpocketId" class="form-control" asp-items="ViewBag.MpocketId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="MCategoryId" class="control-label"></label>

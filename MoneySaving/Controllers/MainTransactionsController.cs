@@ -75,12 +75,15 @@ namespace MoneySaving.Controllers
         {
             ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.CashflowTypeId == id), "ID", "Name");
             ViewData["MpocketId"] = new SelectList(_context.MPocket, "ID", "Name");
-           
+
+            var cashflowType = _context.CashflowType.Where(x => x.ID == id);
+            ViewData["Title_1"] = "เพิ่ม" + cashflowType.ToList()[0].Name;
+
             var mainTransaction = new MainTransaction();
             return View(mainTransaction);
 
             //return View();
-        }        
+        }
 
         // POST: MainTransactions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

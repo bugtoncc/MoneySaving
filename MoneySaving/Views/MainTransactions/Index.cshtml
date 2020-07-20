@@ -4,11 +4,11 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h4>Balance</h4>
+<h4>Pocket</h4>
 
 @foreach (var item in Model.Pockets)
 {
-    <span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) . @Html.DisplayFor(modelItem => item.Balance)</span>
+<span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Balance)</span>
 }
 
 <hr />
@@ -22,12 +22,6 @@
     <input type="submit" value="Filter" />
 </form>
 <br />
-<p>
-    @*<a asp-action="Create">เพิ่มรายรับ</a>
-        <a asp-action="Create" class="ml-2">เพิ่มรายจ่าย</a>*@
-    <a href="/MainTransactions/Create?id=7">เพิ่มรายรับ</a>
-    <a href="/MainTransactions/Create?id=8" class="ml-2">เพิ่มรายจ่าย</a>
-</p>
 <table class="table">
     <thead>
         <tr>
