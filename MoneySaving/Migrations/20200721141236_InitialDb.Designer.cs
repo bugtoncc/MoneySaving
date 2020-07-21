@@ -10,8 +10,8 @@ using MoneySaving.DAL;
 namespace MoneySaving.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    [Migration("20200705052337_AddKeyMCategoryToCashflowType")]
-    partial class AddKeyMCategoryToCashflowType
+    [Migration("20200721141236_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,7 @@ namespace MoneySaving.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("StatusFlag")
@@ -43,27 +44,6 @@ namespace MoneySaving.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("CashflowType");
-                });
-
-            modelBuilder.Entity("MoneySaving.Models.CategoryMap", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("StatusFlag")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("CategoryMap");
                 });
 
             modelBuilder.Entity("MoneySaving.Models.MCategory", b =>
@@ -80,6 +60,7 @@ namespace MoneySaving.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("StatusFlag")
@@ -102,10 +83,14 @@ namespace MoneySaving.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("StatusFlag")
@@ -126,11 +111,21 @@ namespace MoneySaving.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<string>("Detail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MpocketId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("StatusFlag")
                         .HasColumnType("bit");
@@ -143,6 +138,10 @@ namespace MoneySaving.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("MCategoryId");
+
+                    b.HasIndex("MpocketId");
+
                     b.ToTable("MainTransaction");
                 });
 
@@ -151,6 +150,21 @@ namespace MoneySaving.Migrations
                     b.HasOne("MoneySaving.Models.CashflowType", "CashflowType")
                         .WithMany("MCategories")
                         .HasForeignKey("CashflowTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.MainTransaction", b =>
+                {
+                    b.HasOne("MoneySaving.Models.MCategory", "MCategory")
+                        .WithMany("MainTransactions")
+                        .HasForeignKey("MCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneySaving.Models.MPocket", "MPocket")
+                        .WithMany("MainTransactions")
+                        .HasForeignKey("MpocketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

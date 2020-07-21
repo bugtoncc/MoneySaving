@@ -71,13 +71,13 @@ namespace MoneySaving.Controllers
         }
 
         // GET: MainTransactions/Create
-        public IActionResult Create(int id)
+        public IActionResult Create(int CashflowTypeId)
         {
-            ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.CashflowTypeId == id), "ID", "Name");
+            ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.CashflowTypeId == CashflowTypeId), "ID", "Name");
             ViewData["MpocketId"] = new SelectList(_context.MPocket, "ID", "Name");
 
-            var cashflowType = _context.CashflowType.Where(x => x.ID == id);
-            ViewData["Title_1"] = "เพิ่ม" + cashflowType.ToList()[0].Name;
+            var cashflowType = _context.CashflowType.Where(x => x.ID == CashflowTypeId);
+            ViewData["Title_1"] = "Add " + cashflowType.ToList()[0].Name;
 
             var mainTransaction = new MainTransaction();
             return View(mainTransaction);
@@ -99,7 +99,7 @@ namespace MoneySaving.Controllers
                 var mCashFlowType = await _context.CashflowType.FindAsync(mCategory.CashflowTypeId);
                 var mPocket = await _context.MPocket.FindAsync(mainTransaction.MpocketId);
 
-                if (mCashFlowType.Name == "รายรับ")
+                if (mCashFlowType.Name == "Income")
                 {
                     mPocket.Balance += mainTransaction.Amount;
                 }
@@ -110,7 +110,6 @@ namespace MoneySaving.Controllers
                 //--- Update balance ---//
 
                 _context.Update(mPocket);
-
                 _context.Add(mainTransaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -159,7 +158,7 @@ namespace MoneySaving.Controllers
                     var mCashFlowType = await _context.CashflowType.FindAsync(mCategory.CashflowTypeId);
                     var mPocket = await _context.MPocket.FindAsync(mainTransaction.MpocketId);
 
-                    if (mCashFlowType.Name == "รายรับ")
+                    if (mCashFlowType.Name == "Income")
                     {
                         mPocket.Balance += mainTransaction.Amount;
                     }
@@ -222,7 +221,7 @@ namespace MoneySaving.Controllers
             var mCashFlowType = await _context.CashflowType.FindAsync(mCategory.CashflowTypeId);
             var mPocket = await _context.MPocket.FindAsync(mainTransaction.MpocketId);
 
-            if (mCashFlowType.Name == "รายรับ")
+            if (mCashFlowType.Name == "Income")
             {
                 mPocket.Balance -= mainTransaction.Amount;
             }
@@ -249,7 +248,7 @@ namespace MoneySaving.Controllers
             var mCashFlowType = await _context.CashflowType.FindAsync(mCategory.CashflowTypeId);
             var mPocket = await _context.MPocket.FindAsync(mainTransaction.MpocketId);
 
-            if (mCashFlowType.Name == "รายรับ")
+            if (mCashFlowType.Name == "Income")
             {
                 mPocket.Balance += mainTransaction.Amount;
             }

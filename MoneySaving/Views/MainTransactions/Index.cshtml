@@ -4,16 +4,14 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h4>Pocket</h4>
 
 @foreach (var item in Model.Pockets)
 {
-<span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Balance)</span>
+    <span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Balance)</span>
 }
 
-<hr />
-
-<h4>Transaction</h4>
+<br />
+<br />
 
 <form asp-controller="MainTransactions" asp-action="Index" method="get">
     <select asp-for="QueryPocket" asp-items="Model.PocketsSelectList">
