@@ -7,7 +7,7 @@
 
 @foreach (var item in Model.Pockets)
 {
-    <span class="badge badge-primary mr-2">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Balance)</span>
+    <div class="d-inline p-2 bg-primary text-white mr-2">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Balance)</div>
 }
 
 <br />
@@ -20,7 +20,7 @@
     <input type="submit" value="Filter" />
 </form>
 <br />
-<table class="table">
+<table class="table table-sm table-hover">
     <thead>
         <tr>
             <th>
@@ -36,17 +36,11 @@
                 @Html.DisplayNameFor(model => model.MainTransactions[0].Detail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MainTransactions[0].Amount)
+                Income
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.StatusFlag)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastUpdate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UpdateBy)
-                </th>*@
+            <th>
+                Outcome
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -66,21 +60,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Detail)
                 </td>
+                @if (item.MCategory.CashflowTypeId == 1)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                    <td></td>
+                }
+                else
+                {
+                    <td></td>
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                }
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.StatusFlag)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastUpdate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>*@
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>

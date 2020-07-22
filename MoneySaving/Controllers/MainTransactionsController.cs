@@ -44,7 +44,9 @@ namespace MoneySaving.Controllers
             {
                 PocketsSelectList = new SelectList(await pocketQuery.Distinct().ToListAsync()),
                 Pockets = await pockets.ToListAsync(),
-                MainTransactions = await transactions.ToListAsync()
+                MainTransactions = await transactions.ToListAsync(),
+                Income = 10,
+                Outcome = 20
             };
 
             return View(mainVM);

@@ -12,5 +12,8 @@ namespace MoneySaving.Models
         public List<MPocket> Pockets { get; set; }
         public SelectList PocketsSelectList { get; set; }
         public string QueryPocket { get; set; }
+
+        public double Income { get; set; }
+        public double Outcome { get; set; }
     }
 }
