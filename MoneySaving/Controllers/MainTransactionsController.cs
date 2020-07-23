@@ -40,6 +40,8 @@ namespace MoneySaving.Controllers
                 transactions = transactions.Where(x => x.MPocket.Name == QueryPocket);
             }
 
+            transactions = transactions.OrderBy(m => m.TransactionDate).OrderBy(m => m.LastUpdate);
+
             var mainVM = new MainViewModel
             {
                 PocketsSelectList = new SelectList(await pocketQuery.Distinct().ToListAsync()),
