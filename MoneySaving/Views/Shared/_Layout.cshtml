@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Money Saving</title>
+    <title>@ViewData["Title"] - MoneySaving</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -16,8 +16,9 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuSetting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Setting
@@ -26,14 +27,19 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="CashflowTypes" asp-action="Index">Cashflow Type</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="MPockets" asp-action="Index">Pocket</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="MCategories" asp-action="Index">Category</a>
-                                @*<a class="dropdown-item" asp-area="" asp-controller="CategoryMaps" asp-action="Index">Category Mapping</a>*@
+                            </div>                           
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownTransaction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Transaction
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuSetting">
+                                <a class="dropdown-item" href="~/MainTransactions/Create?CashflowTypeId=1">Income</a>
+                                <a class="dropdown-item" href="~/MainTransactions/Create?CashflowTypeId=2">Outcome</a>
                             </div>
                         </li>
                     </ul>
-                    @*<a class="btn btn-outline-success" asp-controller="MainTransactions" asp-action="Create" asp-route-id="1">เพิ่มรายรับ</a>
-                    <a class="btn btn-outline-danger ml-2" asp-controller="MainTransactions" asp-action="Create" asp-route-id="2">เพิ่มรายจ่าย</a>*@
-                    <a class="btn btn-outline-success" href="~/MainTransactions/Create?CashflowTypeId=1">Income</a>
-                    <a class="btn btn-outline-danger ml-2" href="~/MainTransactions/Create?CashflowTypeId=2">Outcome</a>
+
                 </div>
             </div>
         </nav>
@@ -43,29 +49,6 @@
             @RenderBody()
         </main>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalTransaction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form asp-action="Create">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.Modal -->
 
     <footer class="border-top footer text-muted">
         <div class="container">

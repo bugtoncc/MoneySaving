@@ -1,28 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MoneySaving.DAL;
+using Microsoft.VisualBasic;
+using MoneySaving.Data;
 using MoneySaving.Models;
 
 namespace MoneySaving.Controllers
 {
+    [Authorize]
     public class CashflowTypesController : Controller
-    {
-        private readonly MoneyContext _context;
 
-        public CashflowTypesController(MoneyContext context)
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public CashflowTypesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: CashflowTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CashflowType.ToListAsync());
+            //var _view = await _context.CashflowType.ToListAsync();
+            var user = await _userManager.GetUserAsync(User);
+            var cashflowType = from x in _context.CashflowType
+                               where x.User == user
+                               select x;
+
+            return View(cashflowType);
         }
 
         // GET: CashflowTypes/Details/5
@@ -33,8 +47,16 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
-            var cashflowType = await _context.CashflowType
-                .FirstOrDefaultAsync(m => m.ID == id);
+            //var cashflowType = await _context.CashflowType
+            //    .FirstOrDefaultAsync(m => m.ID == id);
+            //if (cashflowType == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
             if (cashflowType == null)
             {
                 return NotFound();
@@ -47,8 +69,8 @@ namespace MoneySaving.Controllers
         public IActionResult Create()
         {
             //return View();
-            var _cashflowType = new CashflowType();
-            return View(_cashflowType);
+            var _view = new CashflowType();
+            return View(_view);
         }
 
         // POST: CashflowTypes/Create
@@ -56,10 +78,14 @@ namespace MoneySaving.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,StatusFlag,LastUpdate,UpdateBy")] CashflowType cashflowType)
+        public async Task<IActionResult> Create([Bind("ID,Name,StatusFlag,LastUpdate")] CashflowType cashflowType)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+
+                cashflowType.User = user;
+
                 _context.Add(cashflowType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -75,12 +101,20 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
-            var cashflowType = await _context.CashflowType.FindAsync(id);
+            //var cashflowType = await _context.CashflowType.FindAsync(id);
+            //if (cashflowType == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
             if (cashflowType == null)
             {
                 return NotFound();
             }
-            cashflowType.LastUpdate = DateTime.Now;
+
             return View(cashflowType);
         }
 
@@ -89,7 +123,7 @@ namespace MoneySaving.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,StatusFlag,LastUpdate,UpdateBy")] CashflowType cashflowType)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,StatusFlag,LastUpdate")] CashflowType cashflowType)
         {
             if (id != cashflowType.ID)
             {
@@ -127,8 +161,16 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
-            var cashflowType = await _context.CashflowType
-                .FirstOrDefaultAsync(m => m.ID == id);
+            //var cashflowType = await _context.CashflowType
+            //    .FirstOrDefaultAsync(m => m.ID == id);
+            //if (cashflowType == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
             if (cashflowType == null)
             {
                 return NotFound();
