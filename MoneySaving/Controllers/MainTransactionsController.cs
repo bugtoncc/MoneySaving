@@ -123,8 +123,24 @@ namespace MoneySaving.Controllers
 
             if (ModelState.IsValid)
             {
+                //--- Update balance ---//
+                var mCategory = await _context.MCategory.FindAsync(mainTransaction.MCategoryId);
+                var mCashFlowType = await _context.CashflowType.FindAsync(mCategory.CashflowTypeId);
+                var mPocket = await _context.MPocket.FindAsync(mainTransaction.MpocketId);
+
+                if (mCashFlowType.Name == "Income")
+                {
+                    mPocket.Balance += mainTransaction.Amount;
+                }
+                else
+                {
+                    mPocket.Balance -= mainTransaction.Amount;
+                }
+                //--- Update balance ---//
+
                 mainTransaction.User = user;
 
+                _context.Update(mPocket);
                 _context.Add(mainTransaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -222,6 +238,22 @@ namespace MoneySaving.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var mainTransaction = await _context.MainTransaction.FindAsync(id);
+
+            //--- Update balance ---//
+            var mCategory = await _context.MCategory.FindAsync(mainTransaction.MCategoryId);
+            var mCashFlowType = await _context.CashflowType.FindAsync(mCategory.CashflowTypeId);
+            var mPocket = await _context.MPocket.FindAsync(mainTransaction.MpocketId);
+
+            if (mCashFlowType.Name == "Income")
+            {
+                mPocket.Balance -= mainTransaction.Amount;
+            }
+            else
+            {
+                mPocket.Balance += mainTransaction.Amount;
+            }
+            //--- Update balance ---//
+
             _context.MainTransaction.Remove(mainTransaction);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

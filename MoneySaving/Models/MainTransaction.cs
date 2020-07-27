@@ -43,7 +43,11 @@ namespace MoneySaving.Models
 
 
         public virtual IdentityUser User { get; set; }
+
+        [Display(Name = "Pocket")]
         public virtual MPocket MPocket { get; set; }
+
+        [Display(Name = "Category")]
         public virtual MCategory MCategory { get; set; }
 
 
