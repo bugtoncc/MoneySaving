@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,28 +15,26 @@ namespace MoneySaving.Models
         [Display(Name = "Last Update")]
         public DateTime LastUpdate { get; set; }
 
-        [Display(Name = "Update By")]
-        public string UpdateBy { get; set; }
-
 
         //--- reference key ---//
-        [Display(Name = "Category")]
-        public int MCategoryId { get; set; }
+        //[Display(Name = "Category")]
+        //public int MCategoryId { get; set; }
 
-        [Display(Name = "Category")]
-        public MCategory MCategory { get; set; }
+        //[Display(Name = "Category")]
+        //public MCategory MCategory { get; set; }
 
-        [Display(Name = "Pocket")]
-        public int MPocketId { get; set; }
+        //[Display(Name = "Pocket")]
+        //public int MPocketId { get; set; }
 
-        [Display(Name = "Pocket")]
-        public MPocket MPocket { get; set; }
-        public ICollection<MainTransaction> MainTransactions { get; set; }
+        //[Display(Name = "Pocket")]
+        //public MPocket MPocket { get; set; }
+        //public ICollection<MainTransaction> MainTransactions { get; set; }
+
+        public virtual IdentityUser User { get; set; }
 
         public CategoryMap()
         {
             LastUpdate = DateTime.Now;
-            UpdateBy = "ADMIN";
             StatusFlag = true;
         }
     }

@@ -10,7 +10,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="MainTransactions" asp-action="Index">MoneySaving</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="CashflowTypes" asp-action="Index">Cashflow Type</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="MPockets" asp-action="Index">Pocket</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="MCategories" asp-action="Index">Category</a>
-                            </div>                           
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownTransaction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,7 +44,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

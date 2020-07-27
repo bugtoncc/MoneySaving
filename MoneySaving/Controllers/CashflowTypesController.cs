@@ -55,13 +55,11 @@ namespace MoneySaving.Controllers
             //}
 
             var user = await _userManager.GetUserAsync(User);
-
             var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
             if (cashflowType == null)
             {
                 return NotFound();
             }
-
             return View(cashflowType);
         }
 
@@ -108,13 +106,11 @@ namespace MoneySaving.Controllers
             //}
 
             var user = await _userManager.GetUserAsync(User);
-
-            var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
+            var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(m => m.ID == id && m.User == user);
             if (cashflowType == null)
             {
                 return NotFound();
             }
-
             return View(cashflowType);
         }
 
@@ -134,6 +130,7 @@ namespace MoneySaving.Controllers
             {
                 try
                 {
+                    cashflowType.LastUpdate = DateTime.Now;
                     _context.Update(cashflowType);
                     await _context.SaveChangesAsync();
                 }

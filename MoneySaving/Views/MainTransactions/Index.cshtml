@@ -1,0 +1,79 @@
+﻿@*@model IEnumerable<MoneySaving.Models.MainTransaction>*@
+@model MoneySaving.Models.MainViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var item in Model.Pockets)
+{
+    <div class="d-inline p-2 bg-primary text-white mr-2">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Balance)</div>
+}
+
+<br />
+<br />
+
+<form asp-controller="MainTransactions" asp-action="Index" method="get">
+    <select asp-for="QueryPocket" asp-items="Model.PocketsSelectList">
+        <option value="">All</option>
+    </select>
+    <input type="submit" value="Filter" />
+</form>
+<br />
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].TransactionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].MPocket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].MCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainTransactions[0].Detail)
+            </th>
+            <th>
+                Income
+            </th>
+            <th>
+                Outcome
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MainTransactions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MPocket.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MCategory.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detail)
+                </td>
+                @if (item.MCategory.CashflowTypeId == 1)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                    <td></td>
+                }
+                else
+                {
+                    <td></td>
+                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                }
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

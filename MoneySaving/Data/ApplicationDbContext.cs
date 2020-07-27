@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MoneySaving.Models;
 
 namespace MoneySaving.Data
@@ -20,10 +21,16 @@ namespace MoneySaving.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<CashflowType> CashflowType { get; set; }
         public DbSet<MPocket> MPocket { get; set; }
         public DbSet<MCategory> MCategory { get; set; }
         //public DbSet<CategoryMap> CategoryMap { get; set; }
         public DbSet<MainTransaction> MainTransaction { get; set; }
+
     }
 }

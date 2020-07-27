@@ -24,10 +24,6 @@ namespace MoneySaving.Controllers
             //var moneyContext = _context.MainTransaction.Include(m => m.MCategory).Include(m => m.MPocket);
             //return View(await moneyContext.ToListAsync());
 
-            IQueryable<string> pocketQuery = from m in _context.MPocket
-                                             orderby m.Name
-                                             select m.Name;
-
             var transactions = from m in _context.MainTransaction.Include(m => m.MCategory).Include(m => m.MPocket)
                                select m;
 
@@ -43,7 +39,7 @@ namespace MoneySaving.Controllers
 
             var mainVM = new MainViewModel
             {
-                PocketsSelectList = new SelectList(await pocketQuery.Distinct().ToListAsync()),
+                PocketsSelectList = new SelectList(await pockets.ToListAsync()),
                 Pockets = await pockets.ToListAsync(),
                 MainTransactions = await transactions.ToListAsync(),
                 Income = 10,

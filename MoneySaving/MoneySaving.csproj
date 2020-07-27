@@ -12,7 +12,6 @@
     <Compile Remove="Data\Migrations\20200726044812_TestAddMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\20200726044952_TestAddMigration.cs" />
     <Compile Remove="Data\Migrations\20200726044952_TestAddMigration.Designer.cs" />
-    <Compile Remove="Models\CategoryMap.cs" />
     <Compile Remove="Models\SeedData.cs" />
   </ItemGroup>
 
