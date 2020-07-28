@@ -30,6 +30,8 @@ namespace MoneySaving.Models
 
 
         public virtual IdentityUser User { get; set; }
+
+        [Display(Name = "Cashflow Type")]
         public virtual CashflowType CashflowType { get; set; }
 
 

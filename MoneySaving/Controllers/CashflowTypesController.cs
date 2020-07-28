@@ -81,7 +81,6 @@ namespace MoneySaving.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
-
                 cashflowType.User = user;
 
                 _context.Add(cashflowType);
@@ -166,7 +165,6 @@ namespace MoneySaving.Controllers
             //}
 
             var user = await _userManager.GetUserAsync(User);
-
             var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
             if (cashflowType == null)
             {

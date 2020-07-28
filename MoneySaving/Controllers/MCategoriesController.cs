@@ -64,7 +64,7 @@ namespace MoneySaving.Controllers
         {
             var userId = _userManager.GetUserId(User);
 
-            ViewData["CashflowTypeId"] = new SelectList(_context.CashflowType.Where(x => x.User.Id == userId), "ID", "Name");
+            ViewData["CashflowTypeId"] = new SelectList(_context.CashflowType.Where(x => x.User.Id == userId || x.User == null), "ID", "Name");
 
             var _view = new MCategory();
             return View(_view);
@@ -112,7 +112,7 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
-            ViewData["CashflowTypeId"] = new SelectList(_context.CashflowType.Where(x => x.User == user), "ID", "Name", mCategory.CashflowTypeId);
+            ViewData["CashflowTypeId"] = new SelectList(_context.CashflowType, "ID", "Name", mCategory.CashflowTypeId);
             return View(mCategory);
         }
 
@@ -151,9 +151,9 @@ namespace MoneySaving.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var user = await _userManager.GetUserAsync(User);
+            //var user = await _userManager.GetUserAsync(User);
 
-            ViewData["CashflowTypeId"] = new SelectList(_context.CashflowType.Where(x => x.User == user), "ID", "Name", mCategory.CashflowTypeId);
+            ViewData["CashflowTypeId"] = new SelectList(_context.CashflowType, "ID", "Name", mCategory.CashflowTypeId);
             return View(mCategory);
         }
 

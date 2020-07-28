@@ -58,7 +58,7 @@ namespace MoneySaving.Controllers
                 transactions = transactions.Where(x => x.MPocket.Name == QueryPocket);
             }
 
-            transactions = transactions.OrderBy(m => m.TransactionDate).OrderBy(m => m.LastUpdate);
+            transactions = transactions.OrderByDescending(m => m.TransactionDate).OrderByDescending(m => m.LastUpdate);
 
             var mainVM = new MainViewModel
             {
@@ -77,11 +77,11 @@ namespace MoneySaving.Controllers
             {
                 return NotFound();
             }
-
+            var user = await _userManager.GetUserAsync(User);
             var mainTransaction = await _context.MainTransaction
                 .Include(m => m.MCategory)
                 .Include(m => m.MPocket)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
             if (mainTransaction == null)
             {
                 return NotFound();
@@ -99,10 +99,10 @@ namespace MoneySaving.Controllers
 
             var userId = _userManager.GetUserId(User);
 
-            ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.CashflowTypeId == CashflowTypeId && x.User.Id == userId), "ID", "Name");
+            ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.CashflowTypeId == CashflowTypeId && (x.User.Id == userId || x.User == null)), "ID", "Name");
             ViewData["MpocketId"] = new SelectList(_context.MPocket.Where(x => x.User.Id == userId), "ID", "Name");
 
-            var cashflowType = _context.CashflowType.Where(x => x.ID == CashflowTypeId && x.User.Id == userId);
+            var cashflowType = _context.CashflowType.Where(x => x.ID == CashflowTypeId && (x.User.Id == userId || x.User == null));
             if (cashflowType.ToList().Count == 1)
             {
                 ViewData["Title_1"] = "Add " + cashflowType.ToList()[0].Name;
@@ -146,7 +146,7 @@ namespace MoneySaving.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.User == user), "ID", "Name", mainTransaction.MCategoryId);
+            ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.User == user || x.User == null), "ID", "Name", mainTransaction.MCategoryId);
             ViewData["MpocketId"] = new SelectList(_context.MPocket.Where(x => x.User == user), "ID", "Name", mainTransaction.MpocketId);
             return View(mainTransaction);
         }
@@ -263,5 +263,79 @@ namespace MoneySaving.Controllers
         {
             return _context.MainTransaction.Any(e => e.ID == id);
         }
+
+        // GET: MainTransactions/Transfer
+        public IActionResult Transfer()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            ViewData["PocketFrom"] = new SelectList(_context.MPocket.Where(x => x.User.Id == userId), "ID", "Name");
+            ViewData["PocketTo"] = new SelectList(_context.MPocket.Where(x => x.User.Id == userId), "ID", "Name");
+
+            var transfer = new TransferMoney
+            {
+                TransactionDate = DateTime.Now,
+                Amount = 0
+            };
+            return View(transfer);
+        }
+
+        // POST: MainTransactions/Transfer
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Transfer([Bind("TransactionDate,PocketFromId,PocketToId,Amount")] TransferMoney transferMoney)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (ModelState.IsValid)
+            {
+                var mPocketFrom = await _context.MPocket.FindAsync(transferMoney.PocketFromId);
+                var mPocketTo = await _context.MPocket.FindAsync(transferMoney.PocketToId);
+
+                var mCategoryAdjustFrom = _context.MCategory.Where(x => x.User == null && x.CashflowTypeId == 2 && x.Name == "Adjust").FirstOrDefault();
+                var mCategoryAdjustTo = _context.MCategory.Where(x => x.User == null && x.CashflowTypeId == 1 && x.Name == "Adjust").FirstOrDefault();
+
+                mPocketFrom.Balance -= transferMoney.Amount;
+                mPocketTo.Balance += transferMoney.Amount;
+
+                _context.Update(mPocketFrom);
+                _context.Update(mPocketTo);
+
+                var mainTransaction = new MainTransaction
+                {
+                    TransactionDate = transferMoney.TransactionDate,
+                    MPocket = mPocketFrom,
+                    MCategory = mCategoryAdjustFrom,
+                    Detail = "Transfer Money",
+                    Amount = transferMoney.Amount,
+                    LastUpdate = DateTime.Now,
+                    User = user
+                };
+                _context.Add(mainTransaction);
+
+                mainTransaction = new MainTransaction
+                {
+                    TransactionDate = transferMoney.TransactionDate,
+                    MPocket = mPocketTo,
+                    MCategory = mCategoryAdjustTo,
+                    Detail = "Transfer Money",
+                    Amount = transferMoney.Amount,
+                    LastUpdate = DateTime.Now,
+                    User = user
+                };
+                _context.Add(mainTransaction);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["PocketFrom"] = new SelectList(_context.MPocket.Where(x => x.User == user), "ID", "Name");
+            ViewData["PocketTo"] = new SelectList(_context.MPocket.Where(x => x.User == user), "ID", "Name");
+
+            return View(transferMoney);
+        }
+
     }
 }

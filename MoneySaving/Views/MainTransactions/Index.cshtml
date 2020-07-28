@@ -13,7 +13,7 @@
                 {
                     <th>@Html.DisplayFor(modelItem => item.Name) </th>
                 }
-                <th class="table-success">Total</th>
+                <th class="table-warning">Total</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                 {
                     <td>@Html.DisplayFor(modelItem => item.Balance)</td>
                 }
-                <td class="table-success">
+                <td class="table-warning">
                     @{
                         double sumVal = 0;
 
@@ -51,22 +51,22 @@
     <table class="table table-sm table-hover">
         <thead>
             <tr>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.MainTransactions[0].TransactionDate)
                 </th>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.MainTransactions[0].MPocket)
                 </th>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.MainTransactions[0].MCategory)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.MainTransactions[0].Detail)
                 </th>
-                <th>
+                <th class="text-success text-right">
                     Income
                 </th>
-                <th>
+                <th class="text-danger text-right">
                     Outcome
                 </th>
                 <th></th>
@@ -76,13 +76,13 @@
             @foreach (var item in Model.MainTransactions)
             {
                 <tr>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.TransactionDate)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.MPocket.Name)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.MCategory.Name)
                     </td>
                     <td>
@@ -90,16 +90,16 @@
                     </td>
                     @if (item.MCategory.CashflowTypeId == 1)
                     {
-                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td class="text-success font-weight-bold text-right">@Html.DisplayFor(modelItem => item.Amount)</td>
                         <td></td>
                     }
                     else
                     {
                         <td></td>
-                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td class="text-danger font-weight-bold text-right">@Html.DisplayFor(modelItem => item.Amount)</td>
                     }
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    <td class="text-center">
+                        <a asp-action="Delete" asp-route-id="@item.ID">delete</a>
                     </td>
                 </tr>
             }

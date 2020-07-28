@@ -2,25 +2,64 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+
+
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-danger">Logout</button>
-        </form>
-    </li>
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuSetting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Setting
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuSetting">
+                <a class="dropdown-item" asp-area="" asp-controller="CashflowTypes" asp-action="Index">Cashflow Type</a>
+                <a class="dropdown-item" asp-area="" asp-controller="MPockets" asp-action="Index">Pocket</a>
+                <a class="dropdown-item" asp-area="" asp-controller="MCategories" asp-action="Index">Category</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "MainTransactions", new { area = "" })">
+                <button type="submit" class="nav-item btn btn-outline-danger">Logout</button>
+            </form>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-grow-1">
+        @*<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTransaction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Transaction
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuSetting">
+                    <a class="dropdown-item" href="~/MainTransactions/Create?CashflowTypeId=1">Income</a>
+                    <a class="dropdown-item" href="~/MainTransactions/Create?CashflowTypeId=2">Outcome</a>
+                    <a class="dropdown-item" href="~/MainTransactions/Transfer">Transfer</a>
+                </div>
+            </li>*@
+        <li class="nav-item">
+            <a class="nav-link" href="~/MainTransactions/Create?CashflowTypeId=1">Income</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="~/MainTransactions/Create?CashflowTypeId=2">Outcome</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="MainTransactions" asp-action="Transfer">Transfer</a>
+        </li>
+    </ul>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    </ul>
 }
-</ul>
+
+
+
