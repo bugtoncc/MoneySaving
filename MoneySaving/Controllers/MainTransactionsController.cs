@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,7 @@ namespace MoneySaving.Controllers
         }
 
         // GET: MainTransactions
-        public async Task<IActionResult> Index(string QueryPocket)
+        public async Task<IActionResult> Index(string QueryPocket, string QueryYear, string QueryMonth)
         {
 
             //var applicationDbContext = _context.MainTransaction.Include(m => m.MCategory).Include(m => m.MPocket);
@@ -58,11 +59,32 @@ namespace MoneySaving.Controllers
                 transactions = transactions.Where(x => x.MPocket.Name == QueryPocket);
             }
 
-            transactions = transactions.OrderByDescending(m => m.TransactionDate).OrderByDescending(m => m.LastUpdate);
+
+            if (string.IsNullOrEmpty(QueryYear))
+            {
+                transactions = transactions.Where(x => x.TransactionDate.Year == DateTime.Now.Year);
+            }
+            else if (QueryYear != "ALL")
+            {
+                transactions = transactions.Where(x => x.TransactionDate.Year == int.Parse(QueryYear));
+            }
+
+            if (string.IsNullOrEmpty(QueryMonth))
+            {
+                transactions = transactions.Where(x => x.TransactionDate.Month == DateTime.Now.Month);
+            }
+            else if (QueryMonth != "ALL")
+            {
+                transactions = transactions.Where(x => x.TransactionDate.Month == int.Parse(QueryMonth));
+            }
+
+            transactions = transactions.OrderByDescending(m => m.TransactionDate).ThenByDescending(m => m.LastUpdate);
 
             var mainVM = new MainViewModel
             {
                 PocketsSelectList = new SelectList(await pocketQuery.Distinct().ToListAsync()),
+                YearSelectList = new SelectList(Enumerable.Range(DateTime.Now.Year - 2, 4), DateTime.Now.Year),
+                MonthSelectList = new SelectList(Enumerable.Range(1, 12), DateTime.Now.Month),
                 Pockets = await pockets.ToListAsync(),
                 MainTransactions = await transactions.ToListAsync()
             };
@@ -337,5 +359,19 @@ namespace MoneySaving.Controllers
             return View(transferMoney);
         }
 
+        public IEnumerable<SelectListItem> Months
+        {
+            get
+            {
+                return DateTimeFormatInfo
+                       .InvariantInfo
+                       .MonthNames
+                       .Select((monthName, index) => new SelectListItem
+                       {
+                           Value = (index + 1).ToString(),
+                           Text = monthName
+                       });
+            }
+        }
     }
 }
