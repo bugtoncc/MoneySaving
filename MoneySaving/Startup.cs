@@ -29,6 +29,7 @@ namespace MoneySaving
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
+                    //Configuration.GetConnectionString("MoneyContextIIS")));
                     Configuration.GetConnectionString("MoneyContextAws")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
