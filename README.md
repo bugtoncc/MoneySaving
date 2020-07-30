@@ -10,9 +10,13 @@
 * .net core 3.1
 * SQL server database
 
+
 ### My Tools
 * MS Visual Studio Community 2019
 * SSMS 18.5.1
 * AWS Elastic Beanstalk
 * AWS RDS
 
+
+### ER Diagram
+![pic1](_img/MoneySaving.png)
