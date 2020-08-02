@@ -18,11 +18,11 @@ namespace MoneySaving.Models
 
 
         [Display(Name = "Pocket")]
-        public int MpocketId { get; set; }               
+        public int MpocketId { get; set; }
 
 
         [Display(Name = "Category")]
-        public int MCategoryId { get; set; }              
+        public int MCategoryId { get; set; }
 
 
         [Required(ErrorMessage = "*")]

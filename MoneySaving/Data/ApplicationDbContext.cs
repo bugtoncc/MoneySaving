@@ -26,11 +26,19 @@ namespace MoneySaving.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        //--- Saving ---//
         public DbSet<CashflowType> CashflowType { get; set; }
         public DbSet<MPocket> MPocket { get; set; }
         public DbSet<MCategory> MCategory { get; set; }
-        //public DbSet<CategoryMap> CategoryMap { get; set; }
         public DbSet<MainTransaction> MainTransaction { get; set; }
+
+        //--- Fund ---//
+        public DbSet<FundPort> FundPort { get; set; }
+        public DbSet<FundSummary> FundSummary { get; set; }
+        public DbSet<FundTransaction> FundTransaction { get; set; }
+        public DbSet<MAmc> MAmc { get; set; }
+        public DbSet<MFund> MFund { get; set; }
+        public DbSet<MFundFlowType> MFundFlowType { get; set; }
 
     }
 }

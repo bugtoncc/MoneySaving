@@ -246,6 +246,147 @@ namespace MoneySaving.Data.Migrations
                     b.ToTable("CashflowType");
                 });
 
+            modelBuilder.Entity("MoneySaving.Models.FundPort", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FundPort");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.FundSummary", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
+
+                    b.Property<int>("FundPortId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MFundId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Unit")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FundPortId");
+
+                    b.HasIndex("MFundId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FundSummary");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.FundTransaction", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
+
+                    b.Property<int>("FundFlowTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FundSummaryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MFundFlowTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MFundId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Nav")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("NavConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Units")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FundSummaryId");
+
+                    b.HasIndex("MFundFlowTypeID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FundTransaction");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.MAmc", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameTh")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("StatusFlag")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UniqueId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MAmc");
+                });
+
             modelBuilder.Entity("MoneySaving.Models.MCategory", b =>
                 {
                     b.Property<int>("ID")
@@ -276,6 +417,87 @@ namespace MoneySaving.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("MCategory");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.MFund", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Abbr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CancelDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CountryFlag")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FundStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MAmcId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameTh")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PermitUs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegisDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RegisId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("StatusFlag")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MAmcId");
+
+                    b.ToTable("MFund");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.MFundFlowType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("StatusFlag")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MFundFlowType");
                 });
 
             modelBuilder.Entity("MoneySaving.Models.MPocket", b =>
@@ -409,6 +631,49 @@ namespace MoneySaving.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("MoneySaving.Models.FundPort", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.FundSummary", b =>
+                {
+                    b.HasOne("MoneySaving.Models.FundPort", "FundPort")
+                        .WithMany("FundSummarys")
+                        .HasForeignKey("FundPortId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneySaving.Models.MFund", "MFund")
+                        .WithMany("FundSummarys")
+                        .HasForeignKey("MFundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.FundTransaction", b =>
+                {
+                    b.HasOne("MoneySaving.Models.FundSummary", "FundSummary")
+                        .WithMany("FundTransactions")
+                        .HasForeignKey("FundSummaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneySaving.Models.MFundFlowType", "MFundFlowType")
+                        .WithMany("FundTransactions")
+                        .HasForeignKey("MFundFlowTypeID");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("MoneySaving.Models.MCategory", b =>
                 {
                     b.HasOne("MoneySaving.Models.CashflowType", "CashflowType")
@@ -420,6 +685,15 @@ namespace MoneySaving.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.MFund", b =>
+                {
+                    b.HasOne("MoneySaving.Models.MAmc", "MAmc")
+                        .WithMany("MFunds")
+                        .HasForeignKey("MAmcId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MoneySaving.Models.MPocket", b =>

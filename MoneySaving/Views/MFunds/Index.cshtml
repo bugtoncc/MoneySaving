@@ -1,0 +1,123 @@
+﻿@*@model IEnumerable<MoneySaving.Models.MFund>*@
+@model MoneySaving.Models.MainFundModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="UpdateApi" method="post">
+    <div class="row">
+        <div class="col-lg-4">
+            <select asp-for="QueryAmc" asp-items="Model.AmcSelectList" class="form-control form-control-sm">
+            </select>
+        </div>
+        <div class="col-lg-2">
+            <input type="submit" value="Update from API" class="btn btn-sm btn-secondary" />
+        </div>
+    </div>
+</form>
+<br />
+
+<br />
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].NameTh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].NameEn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].Abbr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].ProjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].RegisId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].RegisDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].CancelDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].FundStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].PermitUs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].CountryFlag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].StatusFlag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].LastUpdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].MAmc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MFunds)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameTh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NameEn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abbr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CancelDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FundStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PermitUs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountryFlag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusFlag)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MAmc.NameEn)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

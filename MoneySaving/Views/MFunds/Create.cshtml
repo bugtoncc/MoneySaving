@@ -1,0 +1,92 @@
+﻿@model MoneySaving.Models.MFund
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>MFund</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameTh" class="control-label"></label>
+                <input asp-for="NameTh" class="form-control" />
+                <span asp-validation-for="NameTh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameEn" class="control-label"></label>
+                <input asp-for="NameEn" class="form-control" />
+                <span asp-validation-for="NameEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Abbr" class="control-label"></label>
+                <input asp-for="Abbr" class="form-control" />
+                <span asp-validation-for="Abbr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <input asp-for="ProjectId" class="form-control" />
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisId" class="control-label"></label>
+                <input asp-for="RegisId" class="form-control" />
+                <span asp-validation-for="RegisId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisDate" class="control-label"></label>
+                <input asp-for="RegisDate" class="form-control" />
+                <span asp-validation-for="RegisDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CancelDate" class="control-label"></label>
+                <input asp-for="CancelDate" class="form-control" />
+                <span asp-validation-for="CancelDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FundStatus" class="control-label"></label>
+                <input asp-for="FundStatus" class="form-control" />
+                <span asp-validation-for="FundStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MAmcId" class="control-label"></label>
+                <select asp-for="MAmcId" class ="form-control" asp-items="ViewBag.MAmcId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PermitUs" class="control-label"></label>
+                <input asp-for="PermitUs" class="form-control" />
+                <span asp-validation-for="PermitUs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryFlag" class="control-label"></label>
+                <input asp-for="CountryFlag" class="form-control" />
+                <span asp-validation-for="CountryFlag" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="StatusFlag" /> @Html.DisplayNameFor(model => model.StatusFlag)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastUpdate" class="control-label"></label>
+                <input asp-for="LastUpdate" class="form-control" />
+                <span asp-validation-for="LastUpdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
