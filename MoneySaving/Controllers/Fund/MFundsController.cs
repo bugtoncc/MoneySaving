@@ -37,10 +37,22 @@ namespace MoneySaving.Controllers
                        orderby m.UniqueId
                        select m;
 
+            var funds = from m in _context.MFund.Include(m => m.MAmc)
+                        select m;
+
+            if (string.IsNullOrEmpty(QueryAmc))
+            {
+                QueryAmc = "0";
+            }
+
+            funds = funds.Where(x => x.MAmcId == int.Parse(QueryAmc));
+            funds = funds.OrderBy(x => x.MAmc.ID).ThenBy(x => x.ProjectId);
+
             var fundM = new MainFundModel
             {
-                MFunds = await _context.MFund.ToListAsync(),
-                AmcSelectList = new SelectList(await mamc.ToListAsync(), "UniqueId", "NameEn")
+                MFunds = await funds.ToListAsync(),
+                AmcSelectList = new SelectList(await mamc.ToListAsync(), "UniqueId", "NameTh"),
+                AmcSelectListFilter = new SelectList(await mamc.ToListAsync(), "ID", "NameTh"),
             };
 
             return View(fundM);
@@ -181,54 +193,75 @@ namespace MoneySaving.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateApi([Bind("QueryAmc")] string queryAmc)
         {
-            var client = new HttpClient();
-            var queryString = HttpUtility.ParseQueryString(string.Empty);
-            var key = _configuration.GetSection("SecSubscriptionKey").GetSection("FundFactSheet").Value.ToString();
-            var uri = "https://api.sec.or.th/FundFactsheet/fund/amc/" + queryAmc + "?" + queryString;
-
-            // Request headers
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", key);
-
-            var response = await client.GetAsync(uri);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (string.IsNullOrEmpty(queryAmc))
             {
-                var jsonString = await client.GetStringAsync(uri);
-                List<FundsModel> listJsonObject = JsonConvert.DeserializeObject<List<FundsModel>>(jsonString);
-
-                foreach (FundsModel element in listJsonObject)
-                {
-                    var fund = await _context.MFund.FirstOrDefaultAsync(m => m.ProjectId == element.proj_id);
-
-                    if (fund == null)
-                    {
-                        fund = new MFund()
-                        {
-                            ProjectId = element.proj_id,
-                            RegisId = element.regis_id,
-                            //RegisDate = DateTime.TryParseExact(element.regis_date) ? 1 : 2,
-                            //CancelDate = element.cancel_date,
-                            NameTh = element.proj_name_th,
-                            NameEn = element.proj_name_en,
-                            Abbr = element.proj_abbr_name,
-                            FundStatus = element.fund_status,
-                            PermitUs = element.permit_us_investment
-                        };
-                        //_context.Add(fund);
-                    }
-                    else
-                    {
-                        //mAmc.NameTh = element.name_th;
-                        //mAmc.NameEn = element.name_en;
-                        //mAmc.UniqueId = element.unique_id;
-                        //mAmc.LastUpdate = DateTime.Now;
-                        //_context.Update(mAmc);
-                    }
-                    //await _context.SaveChangesAsync();
-
-                    var a = 0;
-                }
+                queryAmc = "0";
             }
 
+            var mamcId = await _context.MAmc.FirstOrDefaultAsync(x => x.UniqueId == queryAmc);
+            if (mamcId != null)
+            {
+                var client = new HttpClient();
+                var queryString = HttpUtility.ParseQueryString(string.Empty);
+                var key = _configuration.GetSection("SecSubscriptionKey").GetSection("FundFactSheet").Value.ToString();
+                var uri = "https://api.sec.or.th/FundFactsheet/fund/amc/" + queryAmc + "?" + queryString;
+
+                // Request headers
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", key);
+
+                var response = await client.GetAsync(uri);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var jsonString = await client.GetStringAsync(uri);
+                    List<FundsModel> listJsonObject = JsonConvert.DeserializeObject<List<FundsModel>>(jsonString);
+
+
+                    foreach (FundsModel element in listJsonObject)
+                    {
+                        var fund = await _context.MFund.FirstOrDefaultAsync(m => m.ProjectId == element.proj_id);
+
+                        if (fund == null)
+                        {
+                            fund = new MFund()
+                            {
+                                ProjectId = element.proj_id,
+                                RegisId = element.regis_id,
+                                NameTh = element.proj_name_th,
+                                NameEn = element.proj_name_en,
+                                Abbr = element.proj_abbr_name,
+                                FundStatus = element.fund_status,
+                                PermitUs = element.permit_us_investment,
+                                MAmcId = mamcId.ID
+                            };
+
+                            if (DateTime.TryParse(element.regis_date, out DateTime tempDT)) { fund.RegisDate = tempDT; }
+                            if (DateTime.TryParse(element.cancel_date, out tempDT)) { fund.CancelDate = tempDT; }
+                            if (int.TryParse(element.invest_country_flage, out int tempCF)) { fund.CountryFlag = tempCF; }
+
+                            _context.Add(fund);
+                        }
+                        else
+                        {
+                            fund.ProjectId = element.proj_id;
+                            fund.RegisId = element.regis_id;
+                            fund.NameTh = element.proj_name_th;
+                            fund.NameEn = element.proj_name_en;
+                            fund.Abbr = element.proj_abbr_name;
+                            fund.FundStatus = element.fund_status;
+                            fund.PermitUs = element.permit_us_investment;
+                            fund.MAmcId = mamcId.ID;
+                            fund.LastUpdate = DateTime.Now;
+
+                            if (DateTime.TryParse(element.regis_date, out DateTime tempDT)) { fund.RegisDate = tempDT; }
+                            if (DateTime.TryParse(element.cancel_date, out tempDT)) { fund.CancelDate = tempDT; }
+                            if (int.TryParse(element.invest_country_flage, out int tempCF)) { fund.CountryFlag = tempCF; }
+
+                            _context.Update(fund);
+                        }
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
             return RedirectToAction(nameof(Index));
         }
 

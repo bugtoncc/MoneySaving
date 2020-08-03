@@ -11,6 +11,7 @@ namespace MoneySaving.Models
         public List<MFund> MFunds { get; set; }
 
         public SelectList AmcSelectList { get; set; }
+        public SelectList AmcSelectListFilter { get; set; }
 
         public string QueryAmc { get; set; }
     }

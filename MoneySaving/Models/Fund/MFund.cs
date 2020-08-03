@@ -76,6 +76,7 @@ namespace MoneySaving.Models
 
         public MFund()
         {
+            StatusFlag = true;
             LastUpdate = DateTime.Now;
         }
     }
