@@ -14,5 +14,6 @@ namespace MoneySaving.Models
         public SelectList AmcSelectListFilter { get; set; }
 
         public string QueryAmc { get; set; }
+        public string QueryFundKeyword { get; set; }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model MoneySaving.Models.MainFundModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Update from API</h1>
+
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>
+
+<form asp-action="UpdateApi" method="post">
+    <div class="row">
+        <div class="col-lg-4">
+            <select asp-for="QueryAmc" asp-items="Model.AmcSelectList" class="form-control form-control-sm">
+                <option value="">-- Assest Management --</option>
+            </select>
+        </div>
+        <div class="col-lg-2">
+            <input type="submit" value="Update from API" class="btn btn-sm btn-secondary" />
+        </div>
+    </div>
+</form>

@@ -8,47 +8,42 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*<a asp-action="Create">Create New</a>*@
+    <a asp-action="UpdateApi">Update from API</a>
 </p>
 <br />
 
-<form asp-action="UpdateApi" method="post">
-    <div class="row">
-        <div class="col-lg-4">
-            <select asp-for="QueryAmc" asp-items="Model.AmcSelectList" class="form-control form-control-sm">
-                <option value="">-- Assest Management --</option>
-            </select>
-        </div>
-        <div class="col-lg-2">
-            <input type="submit" value="Update from API" class="btn btn-sm btn-secondary" />
-        </div>
-    </div>
-</form>
-<br />
 <form asp-controller="MFunds" asp-action="Index" method="get">
     <div class="form-row align-items-center">
         <div class="col-auto">
-            <select asp-for="QueryAmc" asp-items="Model.AmcSelectListFilter" class="form-control form-control-sm">
-                <option value="">-- Assest Management --</option>
-            </select>
+            <input id="txtKeyword" asp-for="QueryFundKeyword" type="text" placeholder="enter keyword" class="form-control form-control-sm" autocomplete="off" />
         </div>
+        @*<div class="col-auto">
+                <select asp-for="QueryAmc" asp-items="Model.AmcSelectListFilter" class="form-control form-control-sm">
+                    <option value="">-- Assest Management --</option>
+                </select>
+            </div>*@
         <div class="col-auto">
             <input type="submit" class="btn btn-sm btn-primary" value="Filter" />
+            <button class="btn btn-sm btn-secondary" onclick="document.getElementById('txtKeyword').value = null;">clear</button>
         </div>
     </div>
 </form>
 <br />
-<table class="table table-sm table-responsive">
+<table class="table table-sm table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MFunds[0].NameTh)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.MFunds[0].NameEn)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.MFunds[0].NameTh)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MFunds[0].Abbr)
+            </th>
+            <th>
+                Assest Management
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.MFunds[0].ProjectId)
@@ -74,9 +69,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MFunds[0].StatusFlag)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MFunds[0].LastUpdate)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.MFunds[0].LastUpdate)
+                </th>*@
             @*<th>
                     @Html.DisplayNameFor(model => model.MFunds[0].MAmc)
                 </th>*@
@@ -88,13 +83,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NameTh)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.NameEn)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.NameTh)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Abbr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MAmc.NameEn)
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.ProjectId)
@@ -120,9 +118,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.StatusFlag)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastUpdate)
-                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.LastUpdate)
+                    </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.MAmc.NameEn)
                     </td>*@

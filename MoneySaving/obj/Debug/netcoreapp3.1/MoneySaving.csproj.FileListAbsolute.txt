@@ -230,3 +230,4 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Index.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\UpdateAPI.cshtml.g.cs

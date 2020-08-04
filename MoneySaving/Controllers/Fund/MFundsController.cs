@@ -28,7 +28,7 @@ namespace MoneySaving.Controllers
         }
 
         // GET: MFunds
-        public async Task<IActionResult> Index(string QueryAmc)
+        public async Task<IActionResult> Index(string QueryAmc, string QueryFundKeyword)
         {
             //var applicationDbContext = _context.MFund.Include(m => m.MAmc);
             //return View(await applicationDbContext.ToListAsync());
@@ -45,13 +45,23 @@ namespace MoneySaving.Controllers
                 QueryAmc = "0";
             }
 
-            funds = funds.Where(x => x.MAmcId == int.Parse(QueryAmc));
+            if (string.IsNullOrEmpty(QueryFundKeyword))
+            {
+                funds = funds.Where(x => 1 == 0);
+            }
+            else
+            {
+                funds = funds.Where(x => x.NameTh.ToUpper().Contains(QueryFundKeyword)
+                    || x.NameEn.ToUpper().Contains(QueryFundKeyword)
+                    || x.Abbr.ToUpper().Contains(QueryFundKeyword));
+            }
+
+            //funds = funds.Where(x => x.MAmcId == int.Parse(QueryAmc));
             funds = funds.OrderBy(x => x.MAmc.ID).ThenBy(x => x.ProjectId);
 
             var fundM = new MainFundModel
             {
                 MFunds = await funds.ToListAsync(),
-                AmcSelectList = new SelectList(await mamc.ToListAsync(), "UniqueId", "NameTh"),
                 AmcSelectListFilter = new SelectList(await mamc.ToListAsync(), "ID", "NameTh"),
             };
 
@@ -115,6 +125,7 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
             ViewData["MAmcId"] = new SelectList(_context.MAmc, "ID", "NameEn", mFund.MAmcId);
+            mFund.LastUpdate = DateTime.Now;
             return View(mFund);
         }
 
@@ -187,6 +198,21 @@ namespace MoneySaving.Controllers
         private bool MFundExists(int id)
         {
             return _context.MFund.Any(e => e.ID == id);
+        }
+
+
+        public async Task<IActionResult> UpdateApi()
+        {
+            var mamc = from m in _context.MAmc
+                       orderby m.UniqueId
+                       select m;
+
+            var fundM = new MainFundModel
+            {
+                AmcSelectList = new SelectList(await mamc.ToListAsync(), "UniqueId", "NameTh"),
+            };
+
+            return View(fundM);
         }
 
 
