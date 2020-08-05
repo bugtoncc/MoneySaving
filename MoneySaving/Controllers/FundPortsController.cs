@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneySaving.Data;
 using MoneySaving.Models;
@@ -11,76 +13,68 @@ using MoneySaving.Models;
 namespace MoneySaving.Controllers
 {
     [Authorize]
-    public class MPocketsController : Controller
+    public class FundPortsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MPocketsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public FundPortsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        // GET: MPockets
+        // GET: FundPorts
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            var mPocket = from x in _context.MPocket
-                          where x.User == user
-                          select x;
-
-            //return View(await _context.MPocket.ToListAsync());
-            return View(mPocket);
+            return View(await _context.FundPort.Where(x => x.User == user).ToListAsync());
         }
 
-        // GET: MPockets/Details/5
+        // GET: FundPorts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
             var user = await _userManager.GetUserAsync(User);
-            var mPocket = await _context.MPocket.FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (mPocket == null)
+            var fundPort = await _context.FundPort
+                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
+            if (fundPort == null)
             {
                 return NotFound();
             }
 
-            return View(mPocket);
+            return View(fundPort);
         }
 
-        // GET: MPockets/Create
+        // GET: FundPorts/Create
         public IActionResult Create()
         {
-            //return View();
-            var _view = new MPocket();
-            return View(_view);
+            var fundport = new FundPort();
+            return View(fundport);
         }
 
-        // POST: MPockets/Create
+        // POST: FundPorts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Balance,StatusFlag,LastUpdate")] MPocket mPocket)
+        public async Task<IActionResult> Create([Bind("ID,Name,LastUpdate")] FundPort fundPort)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
-
-                mPocket.User = user;
-
-                _context.Add(mPocket);
+                fundPort.User = user;
+                _context.Add(fundPort);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(mPocket);
+            return View(fundPort);
         }
 
-        // GET: MPockets/Edit/5
+        // GET: FundPorts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,30 +82,25 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
-            //var mPocket = await _context.MPocket.FindAsync(id);
-            //if (mPocket == null)
-            //{
-            //    return NotFound();
-            //}
-
             var user = await _userManager.GetUserAsync(User);
-            var mPocket = await _context.MPocket.FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (mPocket == null)
+
+            var fundPort = await _context.FundPort.FirstOrDefaultAsync(x => x.ID == id && x.User == user);
+            if (fundPort == null)
             {
                 return NotFound();
             }
-            mPocket.LastUpdate = DateTime.Now;
-            return View(mPocket);
+            fundPort.LastUpdate = DateTime.Now;
+            return View(fundPort);
         }
 
-        // POST: MPockets/Edit/5
+        // POST: FundPorts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Balance,StatusFlag,LastUpdate")] MPocket mPocket)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,LastUpdate")] FundPort fundPort)
         {
-            if (id != mPocket.ID)
+            if (id != fundPort.ID)
             {
                 return NotFound();
             }
@@ -120,13 +109,12 @@ namespace MoneySaving.Controllers
             {
                 try
                 {
-                    mPocket.LastUpdate = DateTime.Now;
-                    _context.Update(mPocket);
+                    _context.Update(fundPort);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MPocketExists(mPocket.ID))
+                    if (!FundPortExists(fundPort.ID))
                     {
                         return NotFound();
                     }
@@ -137,41 +125,41 @@ namespace MoneySaving.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(mPocket);
+            return View(fundPort);
         }
 
-        // GET: MPockets/Delete/5
+        // GET: FundPorts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
             var user = await _userManager.GetUserAsync(User);
-            var mPocket = await _context.MPocket.FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (mPocket == null)
+            var fundPort = await _context.FundPort
+                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
+            if (fundPort == null)
             {
                 return NotFound();
             }
 
-            return View(mPocket);
+            return View(fundPort);
         }
 
-        // POST: MPockets/Delete/5
+        // POST: FundPorts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var mPocket = await _context.MPocket.FindAsync(id);
-            _context.MPocket.Remove(mPocket);
+            var fundPort = await _context.FundPort.FindAsync(id);
+            _context.FundPort.Remove(fundPort);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MPocketExists(int id)
+        private bool FundPortExists(int id)
         {
-            return _context.MPocket.Any(e => e.ID == id);
+            return _context.FundPort.Any(e => e.ID == id);
         }
     }
 }

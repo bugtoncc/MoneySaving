@@ -24,5 +24,10 @@ namespace MoneySaving.Models
 
 
         public List<FundSummary> FundSummarys { get; set; }
+
+        public FundPort()
+        {
+            LastUpdate = DateTime.Now;
+        }
     }
 }
