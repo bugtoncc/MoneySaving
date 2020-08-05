@@ -31,7 +31,7 @@ namespace MoneySaving.Models
         public virtual IdentityUser User { get; set; }
 
 
-        public virtual MFund MFund { get; set; }
+        //public virtual MFund MFund { get; set; }
 
 
         public List<FundTransaction> FundTransactions { get; set; }

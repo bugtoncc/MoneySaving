@@ -11,15 +11,18 @@ namespace MoneySaving.Models
         public int ID { get; set; }
 
 
+        [Display(Name = "Date")]
         public DateTime TransactionDate { get; set; }
 
 
         public int FundSummaryId { get; set; }
 
 
-        public int FundFlowTypeId { get; set; }
+        [Display(Name = "Flow")]
+        public int MFundFlowTypeId { get; set; }
 
 
+        [Display(Name = "Fund")]
         public int MFundId { get; set; }
 
 
@@ -46,5 +49,8 @@ namespace MoneySaving.Models
 
 
         public virtual MFundFlowType MFundFlowType { get; set; }
+
+
+        public virtual MFund MFund { get; set; }
     }
 }

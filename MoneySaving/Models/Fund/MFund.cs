@@ -71,8 +71,10 @@ namespace MoneySaving.Models
         public virtual MAmc MAmc { get; set; }
 
 
-        public List<FundSummary> FundSummarys { get; set; }
+        //public List<FundSummary> FundSummarys { get; set; }
 
+
+        public List<FundTransaction> FundTransactions { get; set; }
 
         public MFund()
         {

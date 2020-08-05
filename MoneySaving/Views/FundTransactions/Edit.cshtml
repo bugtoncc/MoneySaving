@@ -1,0 +1,74 @@
+﻿@model MoneySaving.Models.FundTransaction
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>FundTransaction</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="TransactionDate" class="control-label"></label>
+                <input asp-for="TransactionDate" class="form-control" />
+                <span asp-validation-for="TransactionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FundSummaryId" class="control-label"></label>
+                <select asp-for="FundSummaryId" class="form-control" asp-items="ViewBag.FundSummaryId"></select>
+                <span asp-validation-for="FundSummaryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MFundFlowTypeId" class="control-label"></label>
+                <select asp-for="MFundFlowTypeId" class="form-control" asp-items="ViewBag.MFundFlowTypeId"></select>
+                <span asp-validation-for="MFundFlowTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MFundId" class="control-label"></label>
+                <select asp-for="MFundId" class="form-control" asp-items="ViewBag.MFundId"></select>
+                <span asp-validation-for="MFundId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nav" class="control-label"></label>
+                <input asp-for="Nav" class="form-control" />
+                <span asp-validation-for="Nav" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Units" class="control-label"></label>
+                <input asp-for="Units" class="form-control" />
+                <span asp-validation-for="Units" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="NavConfirmed" /> @Html.DisplayNameFor(model => model.NavConfirmed)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastUpdate" class="control-label"></label>
+                <input asp-for="LastUpdate" class="form-control" />
+                <span asp-validation-for="LastUpdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
