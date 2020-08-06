@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,16 +16,18 @@ namespace MoneySaving.Controllers
     public class FundTransactionsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public FundTransactionsController(ApplicationDbContext context)
+        public FundTransactionsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: FundTransactions
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.FundTransaction.Include(f => f.FundSummary).Include(f => f.MFund).Include(f => f.MFundFlowType);
+            var applicationDbContext = _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,7 +40,7 @@ namespace MoneySaving.Controllers
             }
 
             var fundTransaction = await _context.FundTransaction
-                .Include(f => f.FundSummary)
+                .Include(f => f.FundPort)
                 .Include(f => f.MFund)
                 .Include(f => f.MFundFlowType)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -52,10 +55,13 @@ namespace MoneySaving.Controllers
         // GET: FundTransactions/Create
         public IActionResult Create()
         {
-            ViewData["FundSummaryId"] = new SelectList(_context.FundSummary, "ID", "ID");
+            var userId = _userManager.GetUserId(User);
+            ViewData["FundPortId"] = new SelectList(_context.FundPort.Where(x => x.User.Id == userId), "ID", "Name");
             ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr");
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name");
-            return View();
+
+            var fundTransaction = new FundTransaction();
+            return View(fundTransaction);
         }
 
         // POST: FundTransactions/Create
@@ -63,7 +69,7 @@ namespace MoneySaving.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TransactionDate,FundSummaryId,MFundFlowTypeId,MFundId,Cost,Nav,Units,NavConfirmed,LastUpdate")] FundTransaction fundTransaction)
+        public async Task<IActionResult> Create([Bind("ID,TransactionDate,FundPortId,MFundFlowTypeId,MFundId,Cost,Nav,Units,NavConfirmed,LastUpdate")] FundTransaction fundTransaction)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +77,7 @@ namespace MoneySaving.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FundSummaryId"] = new SelectList(_context.FundSummary, "ID", "ID", fundTransaction.FundSummaryId);
+            ViewData["FundPortId"] = new SelectList(_context.FundPort, "ID", "Name", fundTransaction.FundPortId);
             ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr", fundTransaction.MFundId);
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name", fundTransaction.MFundFlowTypeId);
             return View(fundTransaction);
@@ -90,7 +96,7 @@ namespace MoneySaving.Controllers
             {
                 return NotFound();
             }
-            ViewData["FundSummaryId"] = new SelectList(_context.FundSummary, "ID", "ID", fundTransaction.FundSummaryId);
+            ViewData["FundPortId"] = new SelectList(_context.FundPort, "ID", "Name", fundTransaction.FundPortId);
             ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr", fundTransaction.MFundId);
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name", fundTransaction.MFundFlowTypeId);
             return View(fundTransaction);
@@ -101,7 +107,7 @@ namespace MoneySaving.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TransactionDate,FundSummaryId,MFundFlowTypeId,MFundId,Cost,Nav,Units,NavConfirmed,LastUpdate")] FundTransaction fundTransaction)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,TransactionDate,FundPortId,MFundFlowTypeId,MFundId,Cost,Nav,Units,NavConfirmed,LastUpdate")] FundTransaction fundTransaction)
         {
             if (id != fundTransaction.ID)
             {
@@ -128,7 +134,7 @@ namespace MoneySaving.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FundSummaryId"] = new SelectList(_context.FundSummary, "ID", "ID", fundTransaction.FundSummaryId);
+            ViewData["FundPortId"] = new SelectList(_context.FundPort, "ID", "Name", fundTransaction.FundPortId);
             ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr", fundTransaction.MFundId);
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name", fundTransaction.MFundFlowTypeId);
             return View(fundTransaction);
@@ -143,7 +149,7 @@ namespace MoneySaving.Controllers
             }
 
             var fundTransaction = await _context.FundTransaction
-                .Include(f => f.FundSummary)
+                .Include(f => f.FundPort)
                 .Include(f => f.MFund)
                 .Include(f => f.MFundFlowType)
                 .FirstOrDefaultAsync(m => m.ID == id);

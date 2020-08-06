@@ -23,7 +23,8 @@ namespace MoneySaving.Models
         public virtual IdentityUser User { get; set; }
 
 
-        public List<FundSummary> FundSummarys { get; set; }
+        public List<FundTransaction> FundTransactions { get; set; }
+
 
         public FundPort()
         {

@@ -12,10 +12,13 @@ namespace MoneySaving.Models
 
 
         [Display(Name = "Date")]
+        [Required(ErrorMessage = "*")]
+        [DataType(DataType.Date)]
         public DateTime TransactionDate { get; set; }
 
 
-        public int FundSummaryId { get; set; }
+        [Display(Name = "Portfolio")]
+        public int FundPortId { get; set; }
 
 
         [Display(Name = "Flow")]
@@ -26,15 +29,19 @@ namespace MoneySaving.Models
         public int MFundId { get; set; }
 
 
+        [Required(ErrorMessage = "*")]
         public double Cost { get; set; }
 
 
+        [Required(ErrorMessage = "*")]
         public double Nav { get; set; }
 
 
+        [Required(ErrorMessage = "*")]
         public double Units { get; set; }
 
 
+        [Display(Name = "NAV Confirmed")]
         public bool NavConfirmed { get; set; }
 
 
@@ -45,12 +52,19 @@ namespace MoneySaving.Models
         public virtual IdentityUser User { get; set; }
 
 
-        public virtual FundSummary FundSummary { get; set; }
+        public virtual FundPort FundPort { get; set; }
 
 
         public virtual MFundFlowType MFundFlowType { get; set; }
 
 
         public virtual MFund MFund { get; set; }
+
+
+        public FundTransaction()
+        {
+            TransactionDate = DateTime.Now;
+            LastUpdate = DateTime.Now;
+        }
     }
 }

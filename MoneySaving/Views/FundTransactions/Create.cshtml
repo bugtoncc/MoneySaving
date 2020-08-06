@@ -18,8 +18,8 @@
                 <span asp-validation-for="TransactionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FundSummaryId" class="control-label"></label>
-                <select asp-for="FundSummaryId" class ="form-control" asp-items="ViewBag.FundSummaryId"></select>
+                <label asp-for="FundPortId" class="control-label"></label>
+                <select asp-for="FundPortId" class ="form-control" asp-items="ViewBag.FundPortId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="MFundFlowTypeId" class="control-label"></label>
@@ -34,26 +34,26 @@
                 <input asp-for="Cost" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Nav" class="control-label"></label>
                 <input asp-for="Nav" class="form-control" />
                 <span asp-validation-for="Nav" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div>*@
+            @*<div class="form-group">
                 <label asp-for="Units" class="control-label"></label>
                 <input asp-for="Units" class="form-control" />
                 <span asp-validation-for="Units" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
+            </div>*@
+            @*<div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="NavConfirmed" /> @Html.DisplayNameFor(model => model.NavConfirmed)
                 </label>
-            </div>
-            <div class="form-group">
+            </div>*@
+            @*<div class="form-group">
                 <label asp-for="LastUpdate" class="control-label"></label>
                 <input asp-for="LastUpdate" class="form-control" />
                 <span asp-validation-for="LastUpdate" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

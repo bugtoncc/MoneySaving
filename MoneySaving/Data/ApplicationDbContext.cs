@@ -34,7 +34,7 @@ namespace MoneySaving.Data
 
         //--- Fund ---//
         public DbSet<FundPort> FundPort { get; set; }
-        public DbSet<FundSummary> FundSummary { get; set; }
+        //public DbSet<FundSummary> FundSummary { get; set; }
         public DbSet<FundTransaction> FundTransaction { get; set; }
         public DbSet<MAmc> MAmc { get; set; }
         public DbSet<MFund> MFund { get; set; }

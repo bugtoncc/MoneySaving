@@ -14,6 +14,7 @@
     <Compile Remove="Data\Migrations\20200726044952_TestAddMigration.Designer.cs" />
     <Compile Remove="Data\Migrations\20200805140923_FKonFundTransaction.cs" />
     <Compile Remove="Data\Migrations\20200805140923_FKonFundTransaction.Designer.cs" />
+    <Compile Remove="Models\Fund\FundSummary.cs" />
     <Compile Remove="Models\Saving\SeedData.cs" />
     <Compile Remove="Models\SeedData.cs" />
   </ItemGroup>
