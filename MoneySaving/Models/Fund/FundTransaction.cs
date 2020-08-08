@@ -21,7 +21,7 @@ namespace MoneySaving.Models
         public int FundPortId { get; set; }
 
 
-        [Display(Name = "Flow")]
+        [Display(Name = "Type")]
         public int MFundFlowTypeId { get; set; }
 
 
@@ -52,12 +52,15 @@ namespace MoneySaving.Models
         public virtual IdentityUser User { get; set; }
 
 
+        [Display(Name = "Port")]
         public virtual FundPort FundPort { get; set; }
 
 
+        [Display(Name = "Type")]
         public virtual MFundFlowType MFundFlowType { get; set; }
 
 
+        [Display(Name = "Fund")]
         public virtual MFund MFund { get; set; }
 
 
