@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MoneySaving.Data;
 using MoneySaving.Models;
+using Newtonsoft.Json;
 
 namespace MoneySaving.Controllers
 {
@@ -17,11 +21,13 @@ namespace MoneySaving.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private IConfiguration _configuration { get; }
 
-        public FundTransactionsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public FundTransactionsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         // GET: FundTransactions
@@ -30,6 +36,7 @@ namespace MoneySaving.Controllers
             //var applicationDbContext = _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType);
             //return View(await applicationDbContext.ToListAsync());
 
+            var userId = _userManager.GetUserId(User);
 
             var fundTransactions = from f in _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType)
                                    select f;
@@ -39,7 +46,7 @@ namespace MoneySaving.Controllers
 
             if (string.IsNullOrEmpty(QueryFundKeyword))
             {
-                funds = funds.Where(x => 1 == 1);
+                funds = funds.Where(x => 1 == 0);
             }
             else
             {
@@ -48,15 +55,18 @@ namespace MoneySaving.Controllers
                     || x.Abbr.ToUpper().Contains(QueryFundKeyword));
             }
 
-            funds = funds.OrderBy(x => x.NameEn);
+            funds = funds.OrderBy(x => x.Abbr);
 
 
             var mainFundTransaction = new MainFundTransaction()
             {
                 FundTransactions = await fundTransactions.ToListAsync(),
-                FundSelectListFilter = new SelectList(await funds.ToListAsync(), "ID", "NameEn"),
+                FundSelectListFilter = new SelectList(await funds.ToListAsync(), "ID", "Abbr"),
                 FundFlowTypeSelectListFilter = new SelectList(await _context.MFundFlowType.ToListAsync(), "ID", "Name"),
+                TransactionDate = DateTime.Now
             };
+
+            ViewData["FundPortId"] = new SelectList(_context.FundPort.Where(x => x.User.Id == userId), "ID", "Name");
             return View(mainFundTransaction);
 
         }
@@ -95,7 +105,15 @@ namespace MoneySaving.Controllers
             ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr");
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name");
 
-            var fundTransaction = new FundTransaction();
+            ViewData["MFundAbbr"] = _context.MFund.FirstOrDefault(x => x.ID == QueryFundSelected).Abbr;
+            ViewData["MFundNameEn"] = _context.MFund.FirstOrDefault(x => x.ID == QueryFundSelected).NameEn;
+            ViewData["FundFlowType"] = _context.MFundFlowType.FirstOrDefault(x => x.ID == QueryFundFlowSelected).Name;
+
+            var fundTransaction = new FundTransaction()
+            {
+                MFundFlowTypeId = (int)QueryFundFlowSelected,
+                MFundId = (int)QueryFundSelected
+            };
             return View(fundTransaction);
         }
 
@@ -108,6 +126,31 @@ namespace MoneySaving.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+
+                //var client = new HttpClient();
+                //var queryString = HttpUtility.ParseQueryString(string.Empty);
+                //var key = _configuration.GetSection("SecSubscriptionKey").GetSection("FundDailyInfo").Value.ToString();
+                //var navDate = fundTransaction.TransactionDate.ToString("yyyy-MM-dd");
+                //var projectId = await _context.MFund.FirstOrDefaultAsync(x => x.ID == fundTransaction.MFundId);
+
+                //// Request headers
+                //client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", key);
+
+                //var uri = "https://api.sec.or.th/FundDailyInfo/" + projectId.ProjectId + "/dailynav/" + navDate + "?" + queryString;
+                //var response = await client.GetAsync(uri);
+
+                //if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                //{
+                //    var jsonString = await client.GetStringAsync(uri);
+                //    DailyNavModel obj = JsonConvert.DeserializeObject<DailyNavModel>(jsonString);
+
+                //    fundTransaction.Nav = obj.last_val;
+                //    fundTransaction.Units = Math.Round(fundTransaction.Cost / fundTransaction.Nav, 4);
+                //    fundTransaction.NavConfirmed = true;
+                //}
+
+                fundTransaction.User = user;
                 _context.Add(fundTransaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -211,5 +254,24 @@ namespace MoneySaving.Controllers
         {
             return _context.FundTransaction.Any(e => e.ID == id);
         }
+    }
+
+    public class DailyNavModel
+    {
+        public string last_upd_date { get; set; }
+        public string nav_date { get; set; }
+        public double net_asset { get; set; }
+        public double last_val { get; set; }
+        public double previous_val { get; set; }
+        /*
+          public string amc_info": [{
+            "unique_id": "C0000000239",
+            "sell_price": 0.0000,
+            "buy_price": 0.0000,
+            "sell_swap_price": 0.0000,
+            "buy_swap_price": 0.0000,
+            "remark_th": " ",
+            "remark_en": " "  
+         */
     }
 }

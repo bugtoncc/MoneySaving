@@ -30,14 +30,17 @@ namespace MoneySaving.Models
 
 
         [Required(ErrorMessage = "*")]
+        [DataType(DataType.Currency)]
         public double Cost { get; set; }
 
 
         [Required(ErrorMessage = "*")]
+        [DisplayFormat(DataFormatString = "{0:n4}", ApplyFormatInEditMode = true)]
         public double Nav { get; set; }
 
 
         [Required(ErrorMessage = "*")]
+        [DisplayFormat(DataFormatString = "{0:n4}", ApplyFormatInEditMode = true)]
         public double Units { get; set; }
 
 
@@ -66,6 +69,7 @@ namespace MoneySaving.Models
 
         public FundTransaction()
         {
+            NavConfirmed = true;
             TransactionDate = DateTime.Now;
             LastUpdate = DateTime.Now;
         }
