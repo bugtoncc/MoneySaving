@@ -24,6 +24,14 @@ namespace MoneySaving.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Query<PortSummary>().ToView("PortSummary");
+
+            modelBuilder.Entity<PortSummary>(eb =>
+            {
+                eb.HasNoKey();
+                eb.ToView("v_PortSummary");
+            });
         }
 
         //--- Saving ---//
@@ -39,6 +47,7 @@ namespace MoneySaving.Data
         public DbSet<MAmc> MAmc { get; set; }
         public DbSet<MFund> MFund { get; set; }
         public DbSet<MFundFlowType> MFundFlowType { get; set; }
-
+        public DbSet<PortSummary> PortSummary { get; set; }
+        public DbSet<DailyNav> DailyNav { get; set; }
     }
 }

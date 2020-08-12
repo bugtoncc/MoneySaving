@@ -254,24 +254,21 @@ namespace MoneySaving.Controllers
         {
             return _context.FundTransaction.Any(e => e.ID == id);
         }
-    }
 
-    public class DailyNavModel
-    {
-        public string last_upd_date { get; set; }
-        public string nav_date { get; set; }
-        public double net_asset { get; set; }
-        public double last_val { get; set; }
-        public double previous_val { get; set; }
-        /*
-          public string amc_info": [{
-            "unique_id": "C0000000239",
-            "sell_price": 0.0000,
-            "buy_price": 0.0000,
-            "sell_swap_price": 0.0000,
-            "buy_swap_price": 0.0000,
-            "remark_th": " ",
-            "remark_en": " "  
-         */
+        // GET: FundSummary
+        public async Task<IActionResult> PortSummary()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            //var fundTransactions = from f in _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType)
+            //                       select f;
+
+            IQueryable<PortSummary> portSummary = from x in _context.PortSummary.Include(f => f.MFund).Include(f => f.FundPort).Include(f => f.MFundFlowType)
+                                                  where x.UserId == user.Id
+                                                  orderby x.FundPortId, x.MFundId
+                                                  select x;
+
+            return View(portSummary);
+        }
     }
 }

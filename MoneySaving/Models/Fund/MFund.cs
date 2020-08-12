@@ -76,6 +76,8 @@ namespace MoneySaving.Models
 
         public List<FundTransaction> FundTransactions { get; set; }
 
+        public List<DailyNav> DailyNavs { get; set; }
+
         public MFund()
         {
             StatusFlag = true;

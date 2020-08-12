@@ -1,0 +1,41 @@
+﻿@model MoneySaving.Models.UpdateNavModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Update nav";
+}
+<h1>Update NAV</h1>
+<hr />
+
+<div class="row">
+    <div class="col-lg-4">
+        <form asp-controller="DailyNavs" asp-action="UpdateNav" method="get">
+            <div class="form-group">
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <input id="txtKeyword" asp-for="QueryFundKeyword" type="text" placeholder="search fund" class="form-control form-control-sm" autocomplete="off" />
+                    </div>
+                    <div class="col-auto">
+                        <input type="submit" class="btn btn-sm btn-outline-secondary" value="Search" />
+                    </div>
+                </div>
+            </div>           
+        </form>
+        <form asp-controller="DailyNavs" asp-action="UpdateNav" method="post">
+            <div class="form-group">
+                <select asp-for="MFundId" asp-items="Model.FundSelectListFilter" class="form-control form-control-sm">
+                    @if (Model.FundSelectListFilter.Count() == 0)
+                    {
+                        <option value="">-</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-sm btn-primary" value="Update" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

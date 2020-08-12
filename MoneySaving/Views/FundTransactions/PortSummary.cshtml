@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MoneySaving.Models.PortSummary>
+@*@model List<MoneySaving.Models.PortSummary>*@
+
+@{
+    ViewData["Title"] = "Port Summary";
+}
+<h1>Port Summary</h1>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            @*<th>
+            @Html.DisplayNameFor(model => model.FundPort)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.MFund)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.avg_price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nav_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nav_price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.current_value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gain_baht)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gain_per)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.FundPort.Name)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.MFund.Abbr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.unit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avg_price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nav_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nav_price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.current_value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gain_baht)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gain_per)%
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
