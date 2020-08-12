@@ -18,7 +18,7 @@
         </li>
     </ul>
     <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item dropdown">
+        @*<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSaving" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Saving
             </a>
@@ -27,17 +27,12 @@
                 <a class="dropdown-item" href="~/MainTransactions/Create?CashflowTypeId=2">Outcome</a>
                 <a class="dropdown-item" href="~/MainTransactions/Transfer">Transfer</a>
             </div>
+        </li>*@
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="MainTransactions" asp-action="Index">Ledger</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFund" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Fund
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownFund">
-                <a class="dropdown-item" asp-area="" asp-controller="FundPorts" asp-action="Index">Portfolio</a>
-                <a class="dropdown-item" asp-area="" asp-controller="FundTransactions" asp-action="Index">Transaction</a>
-                <a class="dropdown-item" asp-area="" asp-controller="FundTransactions" asp-action="PortSummary">Port Summary</a>
-
-            </div>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="FundTransactions" asp-action="PortSummary">Fund</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuSetting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

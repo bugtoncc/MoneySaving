@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
 using MoneySaving.Data;
 using MoneySaving.Models;
 using Newtonsoft.Json;
@@ -39,6 +40,7 @@ namespace MoneySaving.Controllers
             var userId = _userManager.GetUserId(User);
 
             var fundTransactions = from f in _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType)
+                                   where f.User.Id == userId
                                    select f;
 
             var funds = from m in _context.MFund.Include(m => m.MAmc)
@@ -79,10 +81,12 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
+            var user = await _userManager.GetUserAsync(User);
             var fundTransaction = await _context.FundTransaction
                 .Include(f => f.FundPort)
                 .Include(f => f.MFund)
                 .Include(f => f.MFundFlowType)
+                .Where(f => f.User == user)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (fundTransaction == null)
             {
@@ -169,7 +173,8 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
-            var fundTransaction = await _context.FundTransaction.FindAsync(id);
+            var user = await _userManager.GetUserAsync(User);
+            var fundTransaction = await _context.FundTransaction.FirstOrDefaultAsync(m => m.ID == id && m.User == user);
             if (fundTransaction == null)
             {
                 return NotFound();
@@ -226,11 +231,12 @@ namespace MoneySaving.Controllers
                 return NotFound();
             }
 
+            var user = await _userManager.GetUserAsync(User);
             var fundTransaction = await _context.FundTransaction
                 .Include(f => f.FundPort)
                 .Include(f => f.MFund)
                 .Include(f => f.MFundFlowType)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
             if (fundTransaction == null)
             {
                 return NotFound();
@@ -268,6 +274,7 @@ namespace MoneySaving.Controllers
                                                   orderby x.FundPortId, x.MFundId
                                                   select x;
 
+            ViewData["PortList"] = await _context.FundPort.Where(x => x.User == user).ToListAsync();
             return View(portSummary);
         }
     }
