@@ -1,70 +1,71 @@
-﻿@model MoneySaving.Models.FundTransaction
+﻿@*@model MoneySaving.Models.FundTransaction*@
+@model MoneySaving.Models.MainFundTransaction
 
 @{
     ViewData["Title"] = "Create";
 }
 
-@if (ViewData["FundFlowType"].ToString().ToUpper() == "BUY")
-{
-    <span class="badge badge-success">@ViewData["FundFlowType"]</span>
-}
-else
-{
-    <span class="badge badge-danger">@ViewData["FundFlowType"]</span>
-}
-<h1>@ViewData["MFundAbbr"]</h1>
-<h5>@ViewData["MFundNameEn"]</h5>
+<h1>Create</h1>
+
+<h4>Transaction</h4>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-controller="FundTransactions" asp-action="Create" method="get">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <input id="txtKeyword" asp-for="QueryFundKeyword" type="text" placeholder="search fund" class="form-control form-control-sm" autocomplete="off" />
+                </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-sm btn-outline-secondary" value="Search" />
+                </div>
+            </div>
+        </form>
+        <br />
+        <form asp-controller="FundTransactions" asp-action="Create" method="post">
             <div class="form-group">
-                <label asp-for="TransactionDate" class="control-label"></label>
-                <input asp-for="TransactionDate" class="form-control" />
-                <span asp-validation-for="TransactionDate" class="text-danger"></span>
+                <label asp-for="MFundId" class="control-label"></label>
+                <select asp-for="MFundId" asp-items="Model.FundSelectListFilter" class="form-control form-control-sm">
+                    @if (Model.FundSelectListFilter.Count() == 0)
+                    {
+                        <option value="">-</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="FundPortId" class="control-label"></label>
-                <select asp-for="FundPortId" class="form-control" asp-items="ViewBag.FundPortId"></select>
+                <select asp-for="FundPortId" class="form-control form-control-sm" asp-items="ViewBag.FundPortId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionDate" class="control-label"></label>
+                <input asp-for="TransactionDate" class="form-control form-control-sm" />
+                <span asp-validation-for="TransactionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MFundFlowTypeId" class="control-label"></label>
+                <select asp-for="MFundFlowTypeId" asp-items="Model.FundFlowTypeSelectListFilter" class="form-control form-control-sm"></select>
+                <span asp-validation-for="MFundFlowTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
+                <input id="inputCost" asp-for="Cost" class="form-control form-control-sm" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <label asp-for="MFundFlowTypeId" class="control-label"></label>
-                    <select asp-for="MFundFlowTypeId" class="form-control" asp-items="ViewBag.MFundFlowTypeId"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MFundId" class="control-label"></label>
-                    <select asp-for="MFundId" class="form-control" asp-items="ViewBag.MFundId"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Nav" class="control-label"></label>
-                    <input asp-for="Nav" class="form-control" />
-                    <span asp-validation-for="Nav" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Units" class="control-label"></label>
-                    <input asp-for="Units" class="form-control" />
-                    <span asp-validation-for="Units" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="NavConfirmed" /> @Html.DisplayNameFor(model => model.NavConfirmed)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastUpdate" class="control-label"></label>
-                    <input asp-for="LastUpdate" class="form-control" />
-                    <span asp-validation-for="LastUpdate" class="text-danger"></span>
-                </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="Nav" class="control-label"></label>
+                <input id="inputNav" asp-for="Nav" class="form-control form-control-sm" />
+                <span asp-validation-for="Nav" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Units" class="control-label"></label>
+                <input id="inputUnits" asp-for="Units" class="form-control form-control-sm" />
+                <span asp-validation-for="Units" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
+            </div>
+
         </form>
     </div>
 </div>
@@ -76,3 +77,28 @@ else
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#inputCost").change(function () {
+        calculateNav()
+    });
+    $("#inputNav").change(function () {
+        calculateNav()
+    });
+
+    function calculateNav() {
+        var inputCost = document.getElementById('inputCost').value;
+        var inputNav = document.getElementById('inputNav').value;
+        var inputUnits = document.getElementById('inputUnits');
+        var unitResult;
+
+        try {
+            unitResult = inputCost / inputNav;
+        } catch (e) {
+            unitResult = 0;
+        }
+
+        inputUnits.value = Math.floor(unitResult * 10000) / 10000;
+    }
+</script>

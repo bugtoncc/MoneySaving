@@ -22,6 +22,7 @@ namespace MoneySaving.Models
         public string QueryFundKeyword { get; set; }
 
 
+        [Display(Name = "Fund")]
         public int MFundId { get; set; }
 
 

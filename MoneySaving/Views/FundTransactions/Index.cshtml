@@ -2,81 +2,16 @@
 @model MoneySaving.Models.MainFundTransaction
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Transaction";
 }
 
-<h1>Index</h1>
+<h1>Transaction</h1>
 
 <p>
     <a class="mr-2" asp-action="Create">Create New</a>
     <a class="mr-2" asp-controller="FundTransactions" asp-action="PortSummary">Back</a>
 </p>
-
-@*<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-    </button>*@
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="FundTransactions" asp-action="Index" method="get">
-            <div class="form-row align-items-center">
-                <div class="col-auto">
-                    <input id="txtKeyword" asp-for="QueryFundKeyword" type="text" placeholder="search fund" class="form-control form-control-sm" autocomplete="off" />
-                </div>
-                <div class="col-auto">
-                    <input type="submit" class="btn btn-sm btn-outline-secondary" value="Search" />
-                </div>
-            </div>
-        </form>
-        <br />
-        <form asp-controller="FundTransactions" asp-action="Create" method="post">
-            <div class="form-group">
-                <select asp-for="MFundId" asp-items="Model.FundSelectListFilter" class="form-control form-control-sm">
-                    @if (Model.FundSelectListFilter.Count() == 0)
-                    {
-                        <option value="">-</option>
-                    }
-                </select>
-            </div>
-            <div class="form-row align-items-center">
-                <div class="col-auto">
-                    <label asp-for="FundPortId" class="control-label"></label>
-                    <select asp-for="FundPortId" class="form-control form-control-sm" asp-items="ViewBag.FundPortId"></select>
-                </div>
-                <div class="col-auto">
-                    <label asp-for="TransactionDate" class="control-label"></label>
-                    <input asp-for="TransactionDate" class="form-control form-control-sm" />
-                    <span asp-validation-for="TransactionDate" class="text-danger"></span>
-                </div>
-                <div class="col-auto">
-                    <label asp-for="MFundFlowTypeId" class="control-label"></label>
-                    <select asp-for="MFundFlowTypeId" asp-items="Model.FundFlowTypeSelectListFilter" class="form-control form-control-sm"></select>
-                    <span asp-validation-for="MFundFlowTypeId" class="text-danger"></span>
-                </div>
-                <div class="col-auto">
-                    <label asp-for="Cost" class="control-label"></label>
-                    <input id="inputCost" asp-for="Cost" class="form-control form-control-sm" />
-                    <span asp-validation-for="Cost" class="text-danger"></span>
-                </div>
-                <div class="col-auto">
-                    <label asp-for="Nav" class="control-label"></label>
-                    <input id="inputNav" asp-for="Nav" class="form-control form-control-sm" />
-                    <span asp-validation-for="Nav" class="text-danger"></span>
-                </div>
-                <div class="col-auto">
-                    <label asp-for="Units" class="control-label"></label>
-                    <input id="inputUnits" asp-for="Units" class="form-control form-control-sm" />
-                    <span asp-validation-for="Units" class="text-danger"></span>
-                </div>
-                <div class="col-auto">
-                    <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<table class="table mt-5">
+<table class="table table-sm mt-5">
     <thead>
         <tr>
             <th>
@@ -149,50 +84,3 @@
         }
     </tbody>
 </table>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-    $("#inputCost").change(function () {
-        calculateNav()
-    });
-    $("#inputNav").change(function () {
-        calculateNav()
-    });
-
-    function calculateNav() {
-        var inputCost = document.getElementById('inputCost').value;
-        var inputNav = document.getElementById('inputNav').value;
-        var inputUnits = document.getElementById('inputUnits');
-        var unitResult;
-
-        try {
-            unitResult = inputCost / inputNav;
-        } catch (e) {
-            unitResult = 0;
-        }
-
-        inputUnits.value = Math.floor(unitResult * 10000) / 10000;
-    }
-</script>

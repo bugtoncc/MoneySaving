@@ -32,7 +32,7 @@ namespace MoneySaving.Controllers
         }
 
         // GET: FundTransactions
-        public async Task<IActionResult> Index(string QueryFundKeyword)
+        public async Task<IActionResult> Index()
         {
             //var applicationDbContext = _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType);
             //return View(await applicationDbContext.ToListAsync());
@@ -43,34 +43,12 @@ namespace MoneySaving.Controllers
                                    where f.User.Id == userId
                                    select f;
 
-            var funds = from m in _context.MFund.Include(m => m.MAmc)
-                        select m;
-
-            if (string.IsNullOrEmpty(QueryFundKeyword))
-            {
-                funds = funds.Where(x => 1 == 0);
-            }
-            else
-            {
-                funds = funds.Where(x => x.NameTh.ToUpper().Contains(QueryFundKeyword)
-                    || x.NameEn.ToUpper().Contains(QueryFundKeyword)
-                    || x.Abbr.ToUpper().Contains(QueryFundKeyword));
-            }
-
-            funds = funds.OrderBy(x => x.Abbr);
-
-
             var mainFundTransaction = new MainFundTransaction()
             {
-                FundTransactions = await fundTransactions.ToListAsync(),
-                FundSelectListFilter = new SelectList(await funds.ToListAsync(), "ID", "Abbr"),
-                FundFlowTypeSelectListFilter = new SelectList(await _context.MFundFlowType.ToListAsync(), "ID", "Name"),
-                TransactionDate = DateTime.Now
+                FundTransactions = await fundTransactions.ToListAsync()
             };
 
-            ViewData["FundPortId"] = new SelectList(_context.FundPort.Where(x => x.User.Id == userId), "ID", "Name");
             return View(mainFundTransaction);
-
         }
 
         // GET: FundTransactions/Details/5
@@ -97,28 +75,33 @@ namespace MoneySaving.Controllers
         }
 
         // GET: FundTransactions/Create
-        public IActionResult Create(int? QueryFundSelected, int? QueryFundFlowSelected)
+        public async Task<IActionResult> Create(string QueryFundKeyword)
         {
-            if (QueryFundSelected == null || QueryFundFlowSelected == null)
-            {
-                return NotFound();
-            }
-
             var userId = _userManager.GetUserId(User);
-            ViewData["FundPortId"] = new SelectList(_context.FundPort.Where(x => x.User.Id == userId), "ID", "Name");
-            ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr");
-            ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name");
+            var funds = from m in _context.MFund.Include(m => m.MAmc)
+                        select m;
 
-            ViewData["MFundAbbr"] = _context.MFund.FirstOrDefault(x => x.ID == QueryFundSelected).Abbr;
-            ViewData["MFundNameEn"] = _context.MFund.FirstOrDefault(x => x.ID == QueryFundSelected).NameEn;
-            ViewData["FundFlowType"] = _context.MFundFlowType.FirstOrDefault(x => x.ID == QueryFundFlowSelected).Name;
-
-            var fundTransaction = new FundTransaction()
+            if (string.IsNullOrEmpty(QueryFundKeyword))
             {
-                MFundFlowTypeId = (int)QueryFundFlowSelected,
-                MFundId = (int)QueryFundSelected
+                funds = funds.Where(x => 1 == 0);
+            }
+            else
+            {
+                funds = funds.Where(x => x.NameTh.ToUpper().Contains(QueryFundKeyword)
+                    || x.NameEn.ToUpper().Contains(QueryFundKeyword)
+                    || x.Abbr.ToUpper().Contains(QueryFundKeyword));
+            }
+            funds = funds.OrderBy(x => x.Abbr);
+
+            var mainFundTransaction = new MainFundTransaction()
+            {
+                FundSelectListFilter = new SelectList(await funds.ToListAsync(), "ID", "Abbr"),
+                FundFlowTypeSelectListFilter = new SelectList(await _context.MFundFlowType.ToListAsync(), "ID", "Name"),
+                TransactionDate = DateTime.Now
             };
-            return View(fundTransaction);
+
+            ViewData["FundPortId"] = new SelectList(_context.FundPort.Where(x => x.User.Id == userId), "ID", "Name");
+            return View(mainFundTransaction);
         }
 
         // POST: FundTransactions/Create
