@@ -9,123 +9,122 @@
 <a class="mr-2" href="~/MainTransactions/Create?CashflowTypeId=2">Outcome</a>
 <a class="mr-2" href="~/MainTransactions/Transfer">Transfer</a>
 <hr />
-<div class="container-fluid">
-    <div class="table-responsive-sm">
-        <table class="table table-sm table-bordered table-hover text-center">
-            <thead>
-                <tr>
-                    @foreach (var item in Model.Pockets)
-                    {
-                        <th>@Html.DisplayFor(modelItem => item.Name) </th>
-                    }
-                    <th class="table-warning">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    @foreach (var item in Model.Pockets)
-                    {
-                        <td>@Html.DisplayFor(modelItem => item.Balance)</td>
-                    }
-                    <td class="table-warning">
-                        @{
-                            double sumVal = 0;
 
-                            for (var i = 0; i < Model.Pockets.Count; i++)
-                            {
-                                sumVal += Model.Pockets[i].Balance;
-                            }
-                            @Html.Raw(sumVal.ToString("C2"))
+<div class="table-responsive-sm">
+    <table class="table table-sm table-bordered table-hover text-center">
+        <thead>
+            <tr>
+                @foreach (var item in Model.Pockets)
+                {
+                    <th>@Html.DisplayFor(modelItem => item.Name) </th>
+                }
+                <th class="table-warning">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var item in Model.Pockets)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.Balance)</td>
+                }
+                <td class="table-warning">
+                    @{
+                        double sumVal = 0;
+
+                        for (var i = 0; i < Model.Pockets.Count; i++)
+                        {
+                            sumVal += Model.Pockets[i].Balance;
                         }
+                        @Html.Raw(sumVal.ToString("C2"))
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+
+<form asp-controller="MainTransactions" asp-action="Index" method="get">
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <select asp-for="QueryYear" asp-items="Model.YearSelectList" class="form-control form-control-sm">
+                <option value="ALL">All</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select asp-for="QueryMonth" asp-items="Model.MonthSelectList" class="form-control form-control-sm">
+                <option value="ALL">All</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select asp-for="QueryPocket" asp-items="Model.PocketsSelectList" class="form-control form-control-sm">
+                <option value="">All</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="submit" class="btn btn-sm btn-primary" value="Filter" />
+        </div>
+    </div>
+</form>
+<br />
+
+<div class="table-responsive-sm">
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.MainTransactions[0].TransactionDate)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.MainTransactions[0].MPocket)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.MainTransactions[0].MCategory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MainTransactions[0].Detail)
+                </th>
+                <th class="text-success text-right">
+                    Income
+                </th>
+                <th class="text-danger text-right">
+                    Outcome
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MainTransactions)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.TransactionDate)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.MPocket.Name)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.MCategory.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail)
+                    </td>
+                    @if (item.MCategory.CashflowTypeId == 1)
+                    {
+                        <td class="text-success font-weight-bold text-right">@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td class="text-danger font-weight-bold text-right">@Html.DisplayFor(modelItem => item.Amount)</td>
+                    }
+                    <td class="text-center">
+                        <a asp-action="Delete" asp-route-id="@item.ID">delete</a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
-    <br />
-    <br />
-
-    <form asp-controller="MainTransactions" asp-action="Index" method="get">
-        <div class="form-row align-items-center">
-            <div class="col-auto">
-                <select asp-for="QueryYear" asp-items="Model.YearSelectList" class="form-control form-control-sm">
-                    <option value="ALL">All</option>
-                </select>
-            </div>
-            <div class="col-auto">
-                <select asp-for="QueryMonth" asp-items="Model.MonthSelectList" class="form-control form-control-sm">
-                    <option value="ALL">All</option>
-                </select>
-            </div>
-            <div class="col-auto">
-                <select asp-for="QueryPocket" asp-items="Model.PocketsSelectList" class="form-control form-control-sm">
-                    <option value="">All</option>
-                </select>
-            </div>
-            <div class="col-auto">
-                <input type="submit" class="btn btn-sm btn-primary" value="Filter" />
-            </div>
-        </div>
-    </form>
-    <br />
-
-    <div class="table-responsive-sm">
-        <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                    <th class="text-center">
-                        @Html.DisplayNameFor(model => model.MainTransactions[0].TransactionDate)
-                    </th>
-                    <th class="text-center">
-                        @Html.DisplayNameFor(model => model.MainTransactions[0].MPocket)
-                    </th>
-                    <th class="text-center">
-                        @Html.DisplayNameFor(model => model.MainTransactions[0].MCategory)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MainTransactions[0].Detail)
-                    </th>
-                    <th class="text-success text-right">
-                        Income
-                    </th>
-                    <th class="text-danger text-right">
-                        Outcome
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.MainTransactions)
-                {
-                    <tr>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.TransactionDate)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.MPocket.Name)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.MCategory.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Detail)
-                        </td>
-                        @if (item.MCategory.CashflowTypeId == 1)
-                        {
-                            <td class="text-success font-weight-bold text-right">@Html.DisplayFor(modelItem => item.Amount)</td>
-                            <td></td>
-                        }
-                        else
-                        {
-                            <td></td>
-                            <td class="text-danger font-weight-bold text-right">@Html.DisplayFor(modelItem => item.Amount)</td>
-                        }
-                        <td class="text-center">
-                            <a asp-action="Delete" asp-route-id="@item.ID">delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>

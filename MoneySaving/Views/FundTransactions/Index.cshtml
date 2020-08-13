@@ -11,76 +11,78 @@
     <a class="mr-2" asp-action="Create">Create New</a>
     <a class="mr-2" asp-controller="FundTransactions" asp-action="PortSummary">Back</a>
 </p>
-<table class="table table-sm mt-5">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].TransactionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].Nav)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].Units)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].NavConfirmed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].LastUpdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].FundPort)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].MFundFlowType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FundTransactions[0].MFund)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.FundTransactions)
-        {
+<div class="table-responsive-sm mt-5">
+    <table class="table table-sm">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TransactionDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cost)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nav)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Units)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NavConfirmed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastUpdate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FundPort.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MFundFlowType.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MFund.Abbr)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].TransactionDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].Cost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].Nav)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].Units)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].NavConfirmed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].LastUpdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].FundPort)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].MFundFlowType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FundTransactions[0].MFund)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FundTransactions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nav)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Units)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NavConfirmed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastUpdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FundPort.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MFundFlowType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MFund.Abbr)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

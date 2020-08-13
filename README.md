@@ -19,4 +19,8 @@
 
 
 ### ER Diagram
+* Ledger
 ![pic1](_img/MoneySaving.png)
+
+* Fund
+![pic2](_img/Fund.png)
