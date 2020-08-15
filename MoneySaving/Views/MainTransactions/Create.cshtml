@@ -1,7 +1,7 @@
 ﻿@model MoneySaving.Models.MainTransaction
 
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = ViewData["Title_1"];
 }
 
 <h2>@ViewData["Title_1"]</h2>
@@ -25,30 +25,15 @@
                 <select asp-for="MCategoryId" class="form-control" asp-items="ViewBag.MCategoryId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Detail" class="control-label"></label>
-                <input asp-for="Detail" class="form-control" />
-                <span asp-validation-for="Detail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
-            @*<div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="StatusFlag" /> @Html.DisplayNameFor(model => model.StatusFlag)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastUpdate" class="control-label"></label>
-                    <input asp-for="LastUpdate" class="form-control" />
-                    <span asp-validation-for="LastUpdate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UpdateBy" class="control-label"></label>
-                    <input asp-for="UpdateBy" class="form-control" />
-                    <span asp-validation-for="UpdateBy" class="text-danger"></span>
-                </div>*@
+            <div class="form-group">
+                <label asp-for="Detail" class="control-label"></label>
+                <input asp-for="Detail" class="form-control" />
+                <span asp-validation-for="Detail" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoneySaving.Models
 {
-    public class PortSummary
+    public class FundSummary
     {
 
         public int FundPortId { get; private set; }

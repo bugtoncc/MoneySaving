@@ -33,7 +33,7 @@ namespace MoneySaving.Controllers
             //var _view = await _context.CashflowType.ToListAsync();
             var user = await _userManager.GetUserAsync(User);
             var cashflowType = from x in _context.CashflowType
-                               where x.User == user
+                               where x.User == user// || x.User == null
                                select x;
 
             return View(cashflowType);
@@ -46,13 +46,6 @@ namespace MoneySaving.Controllers
             {
                 return NotFound();
             }
-
-            //var cashflowType = await _context.CashflowType
-            //    .FirstOrDefaultAsync(m => m.ID == id);
-            //if (cashflowType == null)
-            //{
-            //    return NotFound();
-            //}
 
             var user = await _userManager.GetUserAsync(User);
             var cashflowType = await _context.CashflowType.FirstOrDefaultAsync(x => x.ID == id && x.User == user);

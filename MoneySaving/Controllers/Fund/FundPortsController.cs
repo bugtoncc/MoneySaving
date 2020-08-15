@@ -31,24 +31,6 @@ namespace MoneySaving.Controllers
             return View(await _context.FundPort.Where(x => x.User == user).ToListAsync());
         }
 
-        // GET: FundPorts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var user = await _userManager.GetUserAsync(User);
-            var fundPort = await _context.FundPort
-                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (fundPort == null)
-            {
-                return NotFound();
-            }
-
-            return View(fundPort);
-        }
-
         // GET: FundPorts/Create
         public IActionResult Create()
         {

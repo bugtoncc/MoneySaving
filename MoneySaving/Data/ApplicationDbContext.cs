@@ -27,10 +27,10 @@ namespace MoneySaving.Data
 
             //modelBuilder.Query<PortSummary>().ToView("PortSummary");
 
-            modelBuilder.Entity<PortSummary>(eb =>
+            modelBuilder.Entity<FundSummary>(eb =>
             {
                 eb.HasNoKey();
-                eb.ToView("v_PortSummary");
+                eb.ToView("FundSummary");
             });
         }
 
@@ -47,7 +47,7 @@ namespace MoneySaving.Data
         public DbSet<MAmc> MAmc { get; set; }
         public DbSet<MFund> MFund { get; set; }
         public DbSet<MFundFlowType> MFundFlowType { get; set; }
-        public DbSet<PortSummary> PortSummary { get; set; }
+        public DbSet<FundSummary> FundSummary { get; set; }
         public DbSet<DailyNav> DailyNav { get; set; }
     }
 }

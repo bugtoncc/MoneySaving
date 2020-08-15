@@ -34,24 +34,6 @@ namespace MoneySaving.Controllers
             return View(mPocket);
         }
 
-        // GET: MPockets/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userManager.GetUserAsync(User);
-            var mPocket = await _context.MPocket.FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (mPocket == null)
-            {
-                return NotFound();
-            }
-
-            return View(mPocket);
-        }
-
         // GET: MPockets/Create
         public IActionResult Create()
         {
@@ -87,12 +69,6 @@ namespace MoneySaving.Controllers
             {
                 return NotFound();
             }
-
-            //var mPocket = await _context.MPocket.FindAsync(id);
-            //if (mPocket == null)
-            //{
-            //    return NotFound();
-            //}
 
             var user = await _userManager.GetUserAsync(User);
             var mPocket = await _context.MPocket.FirstOrDefaultAsync(m => m.ID == id && m.User == user);

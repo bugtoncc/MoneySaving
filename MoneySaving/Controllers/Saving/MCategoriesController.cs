@@ -38,27 +38,6 @@ namespace MoneySaving.Controllers
 
         }
 
-        // GET: MCategories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userManager.GetUserAsync(User);
-
-            var mCategory = await _context.MCategory
-                .Include(m => m.CashflowType)
-                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (mCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(mCategory);
-        }
-
         // GET: MCategories/Create
         public IActionResult Create()
         {
@@ -98,12 +77,6 @@ namespace MoneySaving.Controllers
             {
                 return NotFound();
             }
-
-            //var mCategory = await _context.MCategory.FindAsync(id);
-            //if (mCategory == null)
-            //{
-            //    return NotFound();
-            //}
 
             var user = await _userManager.GetUserAsync(User);
             var mCategory = await _context.MCategory.FirstOrDefaultAsync(m => m.ID == id && m.User == user);

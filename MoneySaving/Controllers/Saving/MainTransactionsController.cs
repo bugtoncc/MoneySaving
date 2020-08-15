@@ -29,16 +29,6 @@ namespace MoneySaving.Controllers
         // GET: MainTransactions
         public async Task<IActionResult> Index(string QueryPocket, string QueryYear, string QueryMonth)
         {
-
-            //var applicationDbContext = _context.MainTransaction.Include(m => m.MCategory).Include(m => m.MPocket);
-            //return View(await applicationDbContext.ToListAsync());
-
-            //var user = await _userManager.GetUserAsync(User);
-            //var mainTransaction = from x in _context.MainTransaction.Include(m => m.MCategory).Include(m => m.MPocket)
-            //                      where x.User == user
-            //                      select x;
-            //return View(mainTransaction);
-
             var user = await _userManager.GetUserAsync(User);
 
             IQueryable<string> pocketQuery = from m in _context.MPocket
@@ -58,7 +48,6 @@ namespace MoneySaving.Controllers
             {
                 transactions = transactions.Where(x => x.MPocket.Name == QueryPocket);
             }
-
 
             if (string.IsNullOrEmpty(QueryYear))
             {
@@ -90,26 +79,6 @@ namespace MoneySaving.Controllers
             };
 
             return View(mainVM);
-        }
-
-        // GET: MainTransactions/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var user = await _userManager.GetUserAsync(User);
-            var mainTransaction = await _context.MainTransaction
-                .Include(m => m.MCategory)
-                .Include(m => m.MPocket)
-                .FirstOrDefaultAsync(m => m.ID == id && m.User == user);
-            if (mainTransaction == null)
-            {
-                return NotFound();
-            }
-
-            return View(mainTransaction);
         }
 
         // GET: MainTransactions/Create
@@ -170,65 +139,6 @@ namespace MoneySaving.Controllers
 
             ViewData["MCategoryId"] = new SelectList(_context.MCategory.Where(x => x.User == user || x.User == null), "ID", "Name", mainTransaction.MCategoryId);
             ViewData["MpocketId"] = new SelectList(_context.MPocket.Where(x => x.User == user), "ID", "Name", mainTransaction.MpocketId);
-            return View(mainTransaction);
-        }
-
-        // GET: MainTransactions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            return NotFound();
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mainTransaction = await _context.MainTransaction.FindAsync(id);
-            if (mainTransaction == null)
-            {
-                return NotFound();
-            }
-            ViewData["MCategoryId"] = new SelectList(_context.MCategory, "ID", "Name", mainTransaction.MCategoryId);
-            ViewData["MpocketId"] = new SelectList(_context.MPocket, "ID", "Name", mainTransaction.MpocketId);
-            return View(mainTransaction);
-        }
-
-        // POST: MainTransactions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TransactionDate,MpocketId,MCategoryId,Detail,Amount,StatusFlag,LastUpdate")] MainTransaction mainTransaction)
-        {
-            return NotFound();
-
-            if (id != mainTransaction.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(mainTransaction);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MainTransactionExists(mainTransaction.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MCategoryId"] = new SelectList(_context.MCategory, "ID", "Name", mainTransaction.MCategoryId);
-            ViewData["MpocketId"] = new SelectList(_context.MPocket, "ID", "Name", mainTransaction.MpocketId);
             return View(mainTransaction);
         }
 

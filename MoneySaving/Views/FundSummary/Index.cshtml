@@ -1,0 +1,131 @@
+﻿@model IEnumerable<MoneySaving.Models.FundSummary>
+
+@{
+    ViewData["Title"] = "Fund";
+}
+<div class="mb-4">
+    <h2>Fund</h2>
+    <a class="mr-2" asp-area="" asp-controller="FundPorts" asp-action="Index">Port</a>
+    <a class="mr-2" asp-controller="FundTransactions" asp-action="Index">Transaction</a>
+</div>
+
+@{
+    List<FundPort> listPort = (List<FundPort>)ViewData["PortList"];
+
+    foreach (var port in listPort)
+    {
+        double totalCost = 0;
+        double totalCurValue = 0;
+        double totalGain = 0;
+
+        <div class="mb-4">
+            <h5>@Html.DisplayFor(modelItem => port.Name)</h5>
+            <div class="table-responsive-sm">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MFund)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.unit)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.avg_price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.cost)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nav_date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nav_price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.current_value)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.gain_baht)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.gain_per)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Where(x => x.FundPort == port))
+                        {
+                            totalCost += item.cost;
+                            totalCurValue += item.current_value;
+                            totalGain += item.gain_baht;
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MFund.Abbr)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.unit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.avg_price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.cost)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nav_date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nav_price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.current_value)
+                                </td>
+                                @if (item.gain_baht >= 0)
+                                {
+                                    <td class="text-success">
+                                        @Html.DisplayFor(modelItem => item.gain_baht)
+                                    </td>
+                                    <td class="text-success">
+                                        @Html.DisplayFor(modelItem => item.gain_per)%
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-danger">
+                                        @Html.DisplayFor(modelItem => item.gain_baht)
+                                    </td>
+                                    <td class="text-danger">
+                                        @Html.DisplayFor(modelItem => item.gain_per)%
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="font-weight-bold">
+                            <td>Total</td>
+                            <td></td>
+                            <td></td>
+                            <td>@string.Format("{0:C}", totalCost)</td>
+                            <td></td>
+                            <td></td>
+                            <td>@string.Format("{0:C}", totalCurValue)</td>
+                            @if (totalGain >= 0)
+                            {
+                                <td class="text-success">@string.Format("{0:C}", totalGain)</td>
+                                <td class="text-success">@Math.Round((100 * totalGain / totalCost), 2)%</td>
+                            }
+                            else
+                            {
+                                <td class="text-danger">@string.Format("{0:C}", totalGain)</td>
+                                <td class="text-danger">@Math.Round((100 * totalGain / totalCost), 2)%</td>
+                            }
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    }
+}

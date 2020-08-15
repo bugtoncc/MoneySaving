@@ -51,29 +51,6 @@ namespace MoneySaving.Controllers
             return View(mainFundTransaction);
         }
 
-        // GET: FundTransactions/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userManager.GetUserAsync(User);
-            var fundTransaction = await _context.FundTransaction
-                .Include(f => f.FundPort)
-                .Include(f => f.MFund)
-                .Include(f => f.MFundFlowType)
-                .Where(f => f.User == user)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (fundTransaction == null)
-            {
-                return NotFound();
-            }
-
-            return View(fundTransaction);
-        }
-
         // GET: FundTransactions/Create
         public async Task<IActionResult> Create(string QueryFundKeyword)
         {
@@ -162,6 +139,7 @@ namespace MoneySaving.Controllers
             {
                 return NotFound();
             }
+            fundTransaction.LastUpdate = DateTime.Now;
             ViewData["FundPortId"] = new SelectList(_context.FundPort, "ID", "Name", fundTransaction.FundPortId);
             ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr", fundTransaction.MFundId);
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name", fundTransaction.MFundFlowTypeId);
@@ -242,23 +220,6 @@ namespace MoneySaving.Controllers
         private bool FundTransactionExists(int id)
         {
             return _context.FundTransaction.Any(e => e.ID == id);
-        }
-
-        // GET: FundSummary
-        public async Task<IActionResult> PortSummary()
-        {
-            var user = await _userManager.GetUserAsync(User);
-
-            //var fundTransactions = from f in _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType)
-            //                       select f;
-
-            IQueryable<PortSummary> portSummary = from x in _context.PortSummary.Include(f => f.MFund).Include(f => f.FundPort).Include(f => f.MFundFlowType)
-                                                  where x.UserId == user.Id
-                                                  orderby x.FundPortId, x.MFundId
-                                                  select x;
-
-            ViewData["PortList"] = await _context.FundPort.Where(x => x.User == user).ToListAsync();
-            return View(portSummary);
         }
     }
 }
