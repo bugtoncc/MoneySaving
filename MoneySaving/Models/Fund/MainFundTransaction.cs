@@ -18,6 +18,9 @@ namespace MoneySaving.Models
         public SelectList FundFlowTypeSelectListFilter { get; set; }
 
 
+        public SelectList PortSelectListFilter { get; set; }
+
+
         //public string QueryAmc { get; set; }
         public string QueryFundKeyword { get; set; }
 
@@ -50,5 +53,8 @@ namespace MoneySaving.Models
 
         [Required(ErrorMessage = "*")]
         public double Units { get; set; }
+
+
+        public string QueryFundPortId { get; set; }
     }
 }

@@ -1,31 +1,30 @@
 ﻿@model MoneySaving.Models.MFundFlowType
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details fund flow type";
 }
 
-<h1>Details</h1>
+<h2>Details fund flow type</h2>
+<hr />
 
 <div>
-    <h4>MFundFlowType</h4>
-    <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StatusFlag)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StatusFlag)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LastUpdate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastUpdate)
         </dd>
     </dl>

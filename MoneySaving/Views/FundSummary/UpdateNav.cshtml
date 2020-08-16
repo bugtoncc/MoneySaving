@@ -1,0 +1,16 @@
+﻿@model MoneySaving.Models.UpdateNavModel
+@{
+    ViewData["Title"] = "Update NAV";
+}
+
+<h2>Update NAV</h2>
+<a asp-action="Index">Back to List</a>
+<hr />
+
+<div class="row">
+    <div class="col-lg-4">
+        <form asp-action="UpdateNav" method="post">
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </form>
+    </div>
+</div>

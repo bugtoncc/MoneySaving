@@ -218,15 +218,12 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFundFlowTypes\Index.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MAmcs\Create.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MAmcs\Delete.cshtml.g.cs
-D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MAmcs\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MAmcs\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MAmcs\Index.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Create.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Delete.cshtml.g.cs
-D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\Index.cshtml.g.cs
-D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\UpdateAPI.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\FundPorts\Create.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\FundPorts\Delete.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\FundPorts\Edit.cshtml.g.cs
@@ -237,8 +234,10 @@ D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\FundTransactions\Index.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\DailyNavs\Create.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\DailyNavs\Delete.cshtml.g.cs
-D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\DailyNavs\Details.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\DailyNavs\Edit.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\DailyNavs\Index.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\DailyNavs\UpdateNav.cshtml.g.cs
 D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\FundSummary\Index.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MAmcs\UpdateFromApi.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\MFunds\UpdateFromApi.cshtml.g.cs
+D:\GIT\My Repository\MoneySaving\MoneySaving\obj\Debug\netcoreapp3.1\Razor\Views\FundSummary\UpdateNav.cshtml.g.cs

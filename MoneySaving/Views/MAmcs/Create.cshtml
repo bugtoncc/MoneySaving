@@ -4,10 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>MAmc</h4>
+<h2>Create assets management</h2>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -32,11 +31,6 @@
                     <input class="form-check-input" asp-for="StatusFlag" /> @Html.DisplayNameFor(model => model.StatusFlag)
                 </label>
             </div>
-            @*<div class="form-group">
-                <label asp-for="LastUpdate" class="control-label"></label>
-                <input asp-for="LastUpdate" class="form-control" />
-                <span asp-validation-for="LastUpdate" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

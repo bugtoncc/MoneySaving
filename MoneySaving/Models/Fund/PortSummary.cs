@@ -21,7 +21,7 @@ namespace MoneySaving.Models
         public double unit { get; private set; }
 
 
-        [Display(Name = "Avg. Price")]
+        [Display(Name = "Avg Nav")]
         [DisplayFormat(DataFormatString = "{0:n4}", ApplyFormatInEditMode = true)]
         public double avg_price { get; private set; }
 
@@ -36,16 +36,20 @@ namespace MoneySaving.Models
         public DateTime nav_date { get; private set; }
 
 
-        [Display(Name = "Nav price")]
+        [Display(Name = "Nav")]
         public double nav_price { get; private set; }
 
 
-        [Display(Name = "Current value")]
+        [Display(Name = "Nav previous")]
+        public double nav_prev { get; private set; }
+
+
+        [Display(Name = "Current")]
         [DataType(DataType.Currency)]
         public double current_value { get; private set; }
 
 
-        [Display(Name = "Gain baht")]
+        [Display(Name = "Gain")]
         [DataType(DataType.Currency)]
         public double gain_baht { get; private set; }
 

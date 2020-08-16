@@ -5,131 +5,124 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="mb-4">
+    <h2>Funds</h2>
+    <a class="mr-2" asp-action="Create">Create</a>
+    <a class="mr-2" asp-action="UpdateFromApi">Update from API</a>
+</div>
 
-<p>
-    @*<a asp-action="Create">Create New</a>*@
-    <a asp-action="UpdateApi">Update from API</a>
-</p>
-<br />
-
-<form asp-controller="MFunds" asp-action="Index" method="get">
+<form asp-controller="MFunds" asp-action="Index" method="get" class="mb-2">
     <div class="form-row align-items-center">
+        <div class="col-auto">
+            <select asp-for="QueryAmc" asp-items="Model.AmcSelectListFilter" class="form-control form-control-sm">
+                <option value="">-- Assest Management --</option>
+            </select>
+        </div>
         <div class="col-auto">
             <input id="txtKeyword" asp-for="QueryFundKeyword" type="text" placeholder="enter keyword" class="form-control form-control-sm" autocomplete="off" />
         </div>
-        @*<div class="col-auto">
-                <select asp-for="QueryAmc" asp-items="Model.AmcSelectListFilter" class="form-control form-control-sm">
-                    <option value="">-- Assest Management --</option>
-                </select>
-            </div>*@
         <div class="col-auto">
             <input type="submit" class="btn btn-sm btn-primary" value="Filter" />
             <button class="btn btn-sm btn-secondary" onclick="document.getElementById('txtKeyword').value = null;">clear</button>
         </div>
     </div>
 </form>
-<br />
-<table class="table table-sm table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MFunds[0].NameEn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MFunds[0].NameTh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MFunds[0].Abbr)
-            </th>
-            <th>
-                Assest Management
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].ProjectId)
+
+<div class="table-responsive-sm">
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MFunds[0].Abbr)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].RegisId)
+                    @Html.DisplayNameFor(model => model.MFunds[0].NameEn)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].RegisDate)
+                    @Html.DisplayNameFor(model => model.MFunds[0].NameTh)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].CancelDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].FundStatus)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].PermitUs)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].CountryFlag)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.MFunds[0].StatusFlag)
-            </th>
-            @*<th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].ProjectId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].RegisId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].RegisDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].CancelDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].FundStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].PermitUs)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].CountryFlag)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].StatusFlag)
+                    </th>*@
+                @*<th>
                     @Html.DisplayNameFor(model => model.MFunds[0].LastUpdate)
                 </th>*@
-            @*<th>
-                    @Html.DisplayNameFor(model => model.MFunds[0].MAmc)
-                </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.MFunds)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NameEn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NameTh)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Abbr)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MAmc.NameEn)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.ProjectId)
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MFunds[0].MAmc)
+                    </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MFunds)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Abbr)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RegisId)
+                        @Html.DisplayFor(modelItem => item.NameEn)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RegisDate)
+                        @Html.DisplayFor(modelItem => item.NameTh)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CancelDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FundStatus)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PermitUs)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CountryFlag)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.StatusFlag)
-                </td>
-                @*<td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ProjectId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RegisId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RegisDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CancelDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FundStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PermitUs)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CountryFlag)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.StatusFlag)
+                        </td>*@
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.LastUpdate)
                     </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.MAmc.NameEn)
-                    </td>*@
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.MAmc.NameEn)
+                        </td>*@
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

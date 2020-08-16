@@ -1,15 +1,13 @@
 ﻿@model MoneySaving.Models.MAmc
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete assets management";
 }
 
-<h1>Delete</h1>
+<h2>Delete assets management</h2>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>MAmc</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UniqueId)
@@ -42,7 +40,7 @@
             @Html.DisplayFor(model => model.LastUpdate)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

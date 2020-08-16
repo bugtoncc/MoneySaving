@@ -40,24 +40,30 @@ namespace MoneySaving.Controllers
             var funds = from m in _context.MFund.Include(m => m.MAmc)
                         select m;
 
-            if (string.IsNullOrEmpty(QueryAmc))
-            {
-                QueryAmc = "0";
-            }
+
 
             if (string.IsNullOrEmpty(QueryFundKeyword))
             {
-                funds = funds.Where(x => 1 == 0);
+                if (string.IsNullOrEmpty(QueryAmc))
+                {
+                    QueryAmc = "0";
+                }
+                funds = funds.Where(x => x.MAmcId == int.Parse(QueryAmc));
             }
             else
             {
+                if (!string.IsNullOrEmpty(QueryAmc))
+                {
+                    funds = funds.Where(x => x.MAmcId == int.Parse(QueryAmc));
+                }
+
                 funds = funds.Where(x => x.NameTh.ToUpper().Contains(QueryFundKeyword)
-                    || x.NameEn.ToUpper().Contains(QueryFundKeyword)
-                    || x.Abbr.ToUpper().Contains(QueryFundKeyword));
+                   || x.NameEn.ToUpper().Contains(QueryFundKeyword)
+                   || x.Abbr.ToUpper().Contains(QueryFundKeyword));
             }
 
-            //funds = funds.Where(x => x.MAmcId == int.Parse(QueryAmc));
-            funds = funds.OrderBy(x => x.MAmc.ID).ThenBy(x => x.ProjectId);
+
+            funds = funds.OrderBy(x => x.MAmc.ID).ThenBy(x => x.Abbr);
 
             var fundM = new MainFundModel
             {
@@ -66,25 +72,6 @@ namespace MoneySaving.Controllers
             };
 
             return View(fundM);
-        }
-
-        // GET: MFunds/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mFund = await _context.MFund
-                .Include(m => m.MAmc)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (mFund == null)
-            {
-                return NotFound();
-            }
-
-            return View(mFund);
         }
 
         // GET: MFunds/Create
@@ -200,8 +187,7 @@ namespace MoneySaving.Controllers
             return _context.MFund.Any(e => e.ID == id);
         }
 
-
-        public async Task<IActionResult> UpdateApi()
+        public async Task<IActionResult> UpdateFromApi()
         {
             var mamc = from m in _context.MAmc
                        orderby m.UniqueId
@@ -215,9 +201,8 @@ namespace MoneySaving.Controllers
             return View(fundM);
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> UpdateApi([Bind("QueryAmc")] string queryAmc)
+        public async Task<IActionResult> UpdateFromApi([Bind("QueryAmc")] string queryAmc)
         {
             if (string.IsNullOrEmpty(queryAmc))
             {
@@ -290,7 +275,6 @@ namespace MoneySaving.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-
 
         public class FundsModel
         {

@@ -34,25 +34,6 @@ namespace MoneySaving.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: DailyNavs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var dailyNav = await _context.DailyNav
-                .Include(d => d.MFund)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (dailyNav == null)
-            {
-                return NotFound();
-            }
-
-            return View(dailyNav);
-        }
-
         // GET: DailyNavs/Create
         public IActionResult Create()
         {

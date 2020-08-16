@@ -32,24 +32,6 @@ namespace MoneySaving.Controllers
             return View(await _context.MAmc.OrderBy(x => x.UniqueId).ToListAsync());
         }
 
-        // GET: MAmcs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mAmc = await _context.MAmc
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (mAmc == null)
-            {
-                return NotFound();
-            }
-
-            return View(mAmc);
-        }
-
         // GET: MAmcs/Create
         public IActionResult Create()
         {
@@ -159,9 +141,13 @@ namespace MoneySaving.Controllers
             return _context.MAmc.Any(e => e.ID == id);
         }
 
+        public IActionResult UpdateFromApi()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateApi()
+        public async Task<IActionResult> UpdateFromApi(int? id)
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -205,7 +191,6 @@ namespace MoneySaving.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
 
         public class AssetManagementModel
         {

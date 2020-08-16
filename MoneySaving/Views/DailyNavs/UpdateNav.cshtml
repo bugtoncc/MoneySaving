@@ -3,9 +3,9 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Update nav";
+    ViewData["Title"] = "Update NAV";
 }
-<h1>Update NAV</h1>
+<h2>Update NAV</h2>
 <hr />
 
 <div class="row">
@@ -20,7 +20,7 @@
                         <input type="submit" class="btn btn-sm btn-outline-secondary" value="Search" />
                     </div>
                 </div>
-            </div>           
+            </div>
         </form>
         <form asp-controller="DailyNavs" asp-action="UpdateNav" method="post">
             <div class="form-group">
@@ -38,4 +38,6 @@
     </div>
 </div>
 
-
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -24,16 +24,17 @@ namespace MoneySaving.Models
         public double net_asset { get; set; }
 
 
+        [Display(Name = "NAV")]
         [DisplayFormat(DataFormatString = "{0:n4}", ApplyFormatInEditMode = true)]
         public double last_val { get; set; }
 
 
+        [Display(Name = "Previous NAV")]
         [DisplayFormat(DataFormatString = "{0:n4}", ApplyFormatInEditMode = true)]
         public double previous_val { get; set; }
 
 
         [Display(Name = "Last Update")]
-        [DataType(DataType.Date)]
         public DateTime LastUpdate { get; set; }
 
 

@@ -32,20 +32,44 @@ namespace MoneySaving.Controllers
         }
 
         // GET: FundTransactions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string QueryFundPortId, string QueryFundKeyword)
         {
-            //var applicationDbContext = _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType);
-            //return View(await applicationDbContext.ToListAsync());
-
             var userId = _userManager.GetUserId(User);
 
             var fundTransactions = from f in _context.FundTransaction.Include(f => f.FundPort).Include(f => f.MFund).Include(f => f.MFundFlowType)
                                    where f.User.Id == userId
                                    select f;
 
+            var ports = from m in _context.FundPort
+                        where m.User.Id == userId
+                        select m;
+            ports = ports.OrderBy(x => x.Name);
+
+            //var fundList = fundTransactions.GroupBy(x => x.MFundId)
+            //        .Select(g => g.First())
+            //        .ToList();            
+
+            if (!string.IsNullOrEmpty(QueryFundPortId))
+            {
+                fundTransactions = fundTransactions.Where(x => x.FundPortId.ToString() == QueryFundPortId);
+            }
+            fundTransactions = fundTransactions.OrderBy(x => x.FundPort.Name)
+                            .ThenByDescending(x => x.TransactionDate)
+                            .ThenBy(x => x.MFund.Abbr);
+
+            //if (!string.IsNullOrEmpty(QueryFundKeyword))
+            //{
+            //    funds = funds.Where(x => x.NameTh.ToUpper().Contains(QueryFundKeyword)
+            //          || x.NameEn.ToUpper().Contains(QueryFundKeyword)
+            //          || x.Abbr.ToUpper().Contains(QueryFundKeyword));
+            //}
+            //funds = funds.OrderBy(x => x.Abbr);
+
             var mainFundTransaction = new MainFundTransaction()
             {
-                FundTransactions = await fundTransactions.ToListAsync()
+                FundTransactions = await fundTransactions.ToListAsync(),
+                //FundSelectListFilter = new SelectList(fundList, "ID", "Abbr"),
+                PortSelectListFilter = new SelectList(await ports.ToListAsync(), "ID", "Name")
             };
 
             return View(mainFundTransaction);
@@ -141,7 +165,7 @@ namespace MoneySaving.Controllers
             }
             fundTransaction.LastUpdate = DateTime.Now;
             ViewData["FundPortId"] = new SelectList(_context.FundPort, "ID", "Name", fundTransaction.FundPortId);
-            ViewData["MFundId"] = new SelectList(_context.MFund, "ID", "Abbr", fundTransaction.MFundId);
+            ViewData["MFundId"] = new SelectList(_context.MFund.OrderBy(x => x.Abbr), "ID", "Abbr", fundTransaction.MFundId);
             ViewData["MFundFlowTypeId"] = new SelectList(_context.MFundFlowType, "ID", "Name", fundTransaction.MFundFlowTypeId);
             return View(fundTransaction);
         }

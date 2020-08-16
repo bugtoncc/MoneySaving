@@ -7,6 +7,7 @@
     <h2>Fund</h2>
     <a class="mr-2" asp-area="" asp-controller="FundPorts" asp-action="Index">Port</a>
     <a class="mr-2" asp-controller="FundTransactions" asp-action="Index">Transaction</a>
+    <a class="mr-2" asp-controller="FundSummary" asp-action="UpdateNav">Update NAV</a>
 </div>
 
 @{
@@ -19,28 +20,26 @@
         double totalGain = 0;
 
         <div class="mb-4">
-            <h5>@Html.DisplayFor(modelItem => port.Name)</h5>
+            <h5 class="text-primary">@Html.DisplayFor(modelItem => port.Name)</h5>
             <div class="table-responsive-sm">
-                <table class="table table-sm table-hover">
+                <table class="table table-sm table-hover text-right text-wrap">
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MFund)
-                            </th>
+                            <th></th>
                             <th>
                                 @Html.DisplayNameFor(model => model.unit)
                             </th>
-                            <th>
+                            @*<th>
                                 @Html.DisplayNameFor(model => model.avg_price)
-                            </th>
+                            </th>*@
                             <th>
                                 @Html.DisplayNameFor(model => model.cost)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.nav_date)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.nav_price)
+                            </th>
+                            <th colspan="2">
+                                1 Day change
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.current_value)
@@ -48,9 +47,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.gain_baht)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.gain_per)
-                            </th>
+                            <th>%</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,25 +56,35 @@
                             totalCost += item.cost;
                             totalCurValue += item.current_value;
                             totalGain += item.gain_baht;
-
                             <tr>
-                                <td>
+                                <td class="text-left">
                                     @Html.DisplayFor(modelItem => item.MFund.Abbr)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.unit)
                                 </td>
-                                <td>
+                                @*<td>
                                     @Html.DisplayFor(modelItem => item.avg_price)
-                                </td>
+                                </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.cost)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.nav_date)
-                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.nav_date)
+                                    </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.nav_price)
+                                </td>
+                                <td>
+                                    @string.Format("{0:N4}", item.nav_price - item.nav_prev)
+                                </td>
+                                <td>
+                                    @{
+                                        double val_curr = item.nav_price;
+                                        double val_prev = item.nav_prev;
+                                    }
+
+                                    @string.Format("{0:P}", (val_curr - val_prev) / val_prev)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.current_value)
@@ -107,20 +114,20 @@
                         <tr class="font-weight-bold">
                             <td>Total</td>
                             <td></td>
-                            <td></td>
                             <td>@string.Format("{0:C}", totalCost)</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td>@string.Format("{0:C}", totalCurValue)</td>
                             @if (totalGain >= 0)
                             {
                                 <td class="text-success">@string.Format("{0:C}", totalGain)</td>
-                                <td class="text-success">@Math.Round((100 * totalGain / totalCost), 2)%</td>
+                                <td class="text-success">@string.Format("{0:P}", totalGain / totalCost)</td>
                             }
                             else
                             {
                                 <td class="text-danger">@string.Format("{0:C}", totalGain)</td>
-                                <td class="text-danger">@Math.Round((100 * totalGain / totalCost), 2)%</td>
+                                <td class="text-danger">@string.Format("{0:P}", totalGain / totalCost)</td>
                             }
                         </tr>
                     </tfoot>
