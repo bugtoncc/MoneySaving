@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProjectAuthen", "TestProjectAuthen\TestProjectAuthen.csproj", "{B752A67F-F48A-459F-BABD-3CD3E0CCCB54}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneySavingBackup", "MoneySavingBackup\MoneySavingBackup.csproj", "{003D1A2B-6617-4212-A6AD-C00A1AF556E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneySaving", "MoneySaving\MoneySaving.csproj", "{25C5E84B-5EF5-465B-9D0C-0C0D33540DE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneySaving", "MoneySaving\MoneySaving.csproj", "{25C5E84B-5EF5-465B-9D0C-0C0D33540DE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B752A67F-F48A-459F-BABD-3CD3E0CCCB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B752A67F-F48A-459F-BABD-3CD3E0CCCB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B752A67F-F48A-459F-BABD-3CD3E0CCCB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B752A67F-F48A-459F-BABD-3CD3E0CCCB54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{003D1A2B-6617-4212-A6AD-C00A1AF556E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{003D1A2B-6617-4212-A6AD-C00A1AF556E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{003D1A2B-6617-4212-A6AD-C00A1AF556E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{003D1A2B-6617-4212-A6AD-C00A1AF556E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{25C5E84B-5EF5-465B-9D0C-0C0D33540DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{25C5E84B-5EF5-465B-9D0C-0C0D33540DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25C5E84B-5EF5-465B-9D0C-0C0D33540DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
