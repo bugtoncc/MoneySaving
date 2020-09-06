@@ -15,7 +15,7 @@ namespace MoneySaving.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6")
+                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -525,6 +525,28 @@ namespace MoneySaving.Data.Migrations
                     b.ToTable("MPocket");
                 });
 
+            modelBuilder.Entity("MoneySaving.Models.MSalaryType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("StatusFlag")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MSalaryType");
+                });
+
             modelBuilder.Entity("MoneySaving.Models.MainTransaction", b =>
                 {
                     b.Property<int>("ID")
@@ -566,6 +588,76 @@ namespace MoneySaving.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("MainTransaction");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.Salary.MSalary", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double?>("Award")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Bonus")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("Diligence")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Food")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Incentive")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("Leave")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Loan")
+                        .HasColumnType("float");
+
+                    b.Property<int>("MSalaryTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Overtime")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PVD")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Position")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("SS")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Salary")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Tax")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double?>("Vehicle")
+                        .HasColumnType("float");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MSalaryTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MSalary");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -707,6 +799,19 @@ namespace MoneySaving.Data.Migrations
                     b.HasOne("MoneySaving.Models.MPocket", "MPocket")
                         .WithMany("MainTransactions")
                         .HasForeignKey("MpocketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MoneySaving.Models.Salary.MSalary", b =>
+                {
+                    b.HasOne("MoneySaving.Models.MSalaryType", "MSalaryType")
+                        .WithMany("MSalaries")
+                        .HasForeignKey("MSalaryTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

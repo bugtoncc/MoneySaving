@@ -1,0 +1,174 @@
+﻿@model IEnumerable<MoneySaving.Models.Salary.MSalary>
+
+@{
+    ViewData["Title"] = "Salary";
+}
+
+<div class="mb-4">
+    <h2>Salary</h2>
+    <a class="mr-2" asp-action="Create">Create</a>
+</div>
+
+<div class="mb-4">
+    <div class="table-responsive-sm">
+        <table class="table table-sm table-hover text-right">
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.MSalaryType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Salary)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Overtime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Incentive)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Bonus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Position)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Diligence)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Food)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Vehicle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Leave)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Award)
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tax)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SS)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PVD)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Loan)
+                    </th>
+                    <th>
+                        Receive
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    double dSalary = 0;
+                    double dOvertime = 0;
+                    double dIncentive = 0;
+                    double dBonus = 0;
+                    double dPosition = 0;
+                    double dDiligence = 0;
+                    double dFood = 0;
+                    double dVehicle = 0;
+                    double dLeave = 0;
+                    double dAward = 0;
+                    double dTax = 0;
+                    double dSS = 0;
+                    double dPVD = 0;
+                    double dLoan = 0;
+                    double dTotal = 0;
+
+                    if (item.Salary != null) { dSalary = (double)item.Salary; }
+                    if (item.Overtime != null) { dOvertime = (double)item.Overtime; }
+                    if (item.Incentive != null) { dIncentive = (double)item.Incentive; }
+                    if (item.Bonus != null) { dBonus = (double)item.Bonus; }
+                    if (item.Position != null) { dPosition = (double)item.Position; }
+                    if (item.Diligence != null) { dDiligence = (double)item.Diligence; }
+                    if (item.Food != null) { dFood = (double)item.Food; }
+                    if (item.Vehicle != null) { dVehicle = (double)item.Vehicle; }
+                    if (item.Leave != null) { dLeave = (double)item.Leave; }
+                    if (item.Award != null) { dAward = (double)item.Award; }
+                    if (item.Tax != null) { dTax = (double)item.Tax; }
+                    if (item.SS != null) { dSS = (double)item.SS; }
+                    if (item.PVD != null) { dPVD = (double)item.PVD; }
+                    if (item.Loan != null) { dLoan = (double)item.Loan; }
+
+                    dTotal = dSalary + dOvertime + dIncentive + dBonus + dPosition + dDiligence + dFood + dVehicle + dLeave + dAward;
+
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.MSalaryType.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Salary)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Overtime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Incentive)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Bonus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Diligence)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Food)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vehicle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Leave)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Award)
+                        </td>
+                        <td class="table-secondary">
+                            @string.Format("{0:N2}", dTotal)
+                        </td>
+                        <td class="text-danger">
+                            @Html.DisplayFor(modelItem => item.Tax)
+                        </td>
+                        <td class="text-danger">
+                            @Html.DisplayFor(modelItem => item.SS)
+                        </td>
+                        <td class="text-danger">
+                            @Html.DisplayFor(modelItem => item.PVD)
+                        </td>
+                        <td class="text-danger">
+                            @Html.DisplayFor(modelItem => item.Loan)
+                        </td>
+                        <td class="table-secondary font-weight-bold">
+                            @string.Format("{0:N2}", dTotal - dTax - dSS - dPVD - dLoan)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

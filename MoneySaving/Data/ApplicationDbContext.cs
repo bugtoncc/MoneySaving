@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using MoneySaving.Models;
+using MoneySaving.Models.Salary;
 
 namespace MoneySaving.Data
 {
@@ -34,11 +35,13 @@ namespace MoneySaving.Data
             });
         }
 
+
         //--- Saving ---//
         public DbSet<CashflowType> CashflowType { get; set; }
         public DbSet<MPocket> MPocket { get; set; }
         public DbSet<MCategory> MCategory { get; set; }
         public DbSet<MainTransaction> MainTransaction { get; set; }
+
 
         //--- Fund ---//
         public DbSet<FundPort> FundPort { get; set; }
@@ -49,5 +52,10 @@ namespace MoneySaving.Data
         public DbSet<MFundFlowType> MFundFlowType { get; set; }
         public DbSet<FundSummary> FundSummary { get; set; }
         public DbSet<DailyNav> DailyNav { get; set; }
+
+
+        //--- Salary ---//
+        public DbSet<MSalaryType> MSalaryType { get; set; }
+        public DbSet<MSalary> MSalary { get; set; }
     }
 }

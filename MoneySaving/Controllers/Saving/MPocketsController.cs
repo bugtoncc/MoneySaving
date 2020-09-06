@@ -28,6 +28,7 @@ namespace MoneySaving.Controllers
             var user = await _userManager.GetUserAsync(User);
             var mPocket = from x in _context.MPocket
                           where x.User == user
+                          orderby x.Name
                           select x;
 
             //return View(await _context.MPocket.ToListAsync());

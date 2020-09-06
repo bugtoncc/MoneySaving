@@ -42,6 +42,7 @@ namespace MoneySaving.Controllers
 
             var pockets = from p in _context.MPocket
                           where p.User == user
+                          orderby p.Name
                           select p;
 
             if (!string.IsNullOrEmpty(QueryPocket))
